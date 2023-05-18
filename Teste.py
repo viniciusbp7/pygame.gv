@@ -8,5 +8,5 @@ WIDTH = 480
 HEIGHT = 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Cayman')
-
-#o gguido é tchola
+bg_img = pygame.image.load("Mega desoft/base.webp")
+bg_img = pygame.transform.scale(bg_img,(WIDTH,HEIGHT))
