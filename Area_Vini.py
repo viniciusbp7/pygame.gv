@@ -5,17 +5,14 @@ import pygame
 
 pygame.init()
 
-# ----- Gera tela principal
-#WIDTH = 500
-#HEIGHT = 400
-#window = pygame.display.set_mode((WIDTH, HEIGHT))
 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 pygame.display.set_caption('Hello World!')
 
 # ----- Inicia estruturas de dados
 game = True
 
-# ----- Inicia assets
+# Importa os sprites de personagens e mobs------------------------------------------------------------------------
+
 background = pygame.image.load('imagens/base.webp').convert()
 #background = pygame.image.load('imagens/Background.png').convert()
 ritsu = pygame.image.load("imagens/Ritsu/General_Ritsu_Base.png")
@@ -24,6 +21,8 @@ veronica = pygame.image.load("imagens/Veronica/Veronica_Base.png")
 lobo = pygame.image.load("imagens/Mobs/Lobo_Base.png")
 lagarto = pygame.image.load("imagens/Mobs/Lagarto_Base.png")
 elefante = pygame.image.load("imagens/Mobs/Elefante_Base.png")
+
+# Define o tamanho dos personagens e mobs--------------------------------------------------------------------------
 
 WIDTH = window.get_width()
 HEIGHT = window.get_height()
@@ -46,6 +45,8 @@ LA_HEIGHT = (lagarto.get_height())*2.2
 E_WIDTH = (elefante.get_width())*2.2
 E_HEIGHT = (elefante.get_height())*2.2
 
+# Ajusta o tamanho dos personagens e mobs------------------------------------------------------------------------
+
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 ritsu = pygame.transform.scale(ritsu, (R_WIDTH, R_HEIGHT))
 hinoekagura = pygame.transform.scale(hinoekagura, (H_WIDTH, H_HEIGHT))
@@ -59,12 +60,16 @@ while game:
 
     for event in pygame.event.get():
 
+        # Fecha o jogo quando aperta esc-------------------------------------------------------------------------
+
         if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             exit()
 
-    # ----- Gera saídas
-    window.fill((0, 0, 0))  # Preenche com a cor branca
+    # Define o Background---------------------------------------------------------------------------------------
     window.blit(background, (0, 0))
+
+    # Posiciona os personagens em campo-------------------------------------------------------------------------
+
     window.blit(ritsu, (360, HEIGHT-420))
     window.blit(hinoekagura, (60, HEIGHT-650))
     window.blit(veronica, (100, HEIGHT-350))
@@ -85,6 +90,7 @@ while game:
     #window.blit(elefante, (WIDTH-800,HEIGHT-600))
 
     # ----- Atualiza estado do jogo
+
     pygame.display.update()  # Mostra o novo frame para o jogador
 
 # ===== Finalização =====
