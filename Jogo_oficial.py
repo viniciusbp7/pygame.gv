@@ -6,8 +6,8 @@ import pygame
 pygame.init()
 
 # ----- Gera tela principal
-WIDTH = 500
-HEIGHT = 400
+#WIDTH = 500
+#HEIGHT = 400
 #window = pygame.display.set_mode((WIDTH, HEIGHT))
 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 pygame.display.set_caption('Hello World!')
@@ -16,9 +16,13 @@ pygame.display.set_caption('Hello World!')
 game = True
 
 # ----- Inicia assets
-image = pygame.image.load('imagens/base.webp').convert()
+background = pygame.image.load('imagens/base.webp').convert()
 ritsu= pygame.image.load("imagens/Ritsu/General_Ritsu_Base.png")
 
+WIDTH = window.get_width()
+HEIGHT = window.get_height()
+
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 
 # ===== Loop principal =====
 while game:
@@ -27,10 +31,14 @@ while game:
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
+        
+        #if event.type == pygame.KEYDOWN:
+            #if event.type == pygame.K_1:
+                #game = False
 
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
-    window.blit(image, (10, 10))
+    window.blit(background, (0, 0))
     window.blit(ritsu, (2, 2))
 
     # ----- Atualiza estado do jogo
