@@ -18,11 +18,17 @@ game = True
 # ----- Inicia assets
 background = pygame.image.load('imagens/base.webp').convert()
 ritsu= pygame.image.load("imagens/Ritsu/General_Ritsu_Base.png")
+hinoekagura= pygame.image.load("imagens/Ritsu/Hinoekagura_Base.png")
+
 
 WIDTH = window.get_width()
 HEIGHT = window.get_height()
 
+R_WIDTH = (ritsu.get_width())/1.25
+R_HEIGHT = (ritsu.get_height())/1.25
+
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+ritsu = pygame.transform.scale(ritsu, (R_WIDTH, R_HEIGHT))
 
 # ===== Loop principal =====
 while game:
