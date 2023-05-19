@@ -87,7 +87,7 @@ while game:
 
     # BOSS Wave-------------------------------------------------------------------------------------------------
 
-    #window.blit(elefante, (WIDTH-800,HEIGHT-600))
+    #window.blit(elefante, (WIDTH-800,HEIGHT-635))
 
     # ----- Atualiza estado do jogo
 
