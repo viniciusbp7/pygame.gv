@@ -17,9 +17,10 @@ game = True
 
 # ----- Inicia assets
 background = pygame.image.load('imagens/base.webp').convert()
+#background = pygame.image.load('imagens/Background.png').convert()
 ritsu= pygame.image.load("imagens/Ritsu/General_Ritsu_Base.png")
-hinoekagura= pygame.image.load("imagens/Ritsu/Hinoekagura_Base.png")
-
+hinoekagura= pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
+veronica = pygame.image.load("imagens/Veronica/Veronica_Base.png")
 
 WIDTH = window.get_width()
 HEIGHT = window.get_height()
@@ -27,8 +28,17 @@ HEIGHT = window.get_height()
 R_WIDTH = (ritsu.get_width())/1.25
 R_HEIGHT = (ritsu.get_height())/1.25
 
+H_WIDTH = (hinoekagura.get_width())/1.25
+H_HEIGHT = (hinoekagura.get_height())/1.25
+
+V_WIDTH = (veronica.get_width())/1.25
+V_HEIGHT = (veronica.get_height())/1.25
+
+
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 ritsu = pygame.transform.scale(ritsu, (R_WIDTH, R_HEIGHT))
+hinoekagura = pygame.transform.scale(hinoekagura, (H_WIDTH, H_HEIGHT))
+veronica = pygame.transform.scale(veronica, (V_WIDTH, V_HEIGHT))
 
 # ===== Loop principal =====
 while game:
@@ -45,7 +55,9 @@ while game:
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
-    window.blit(ritsu, (2, 2))
+    window.blit(ritsu, (400, 440))
+    window.blit(hinoekagura, (100, 200))
+    window.blit(veronica, (180, 550))
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
