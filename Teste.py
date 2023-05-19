@@ -17,7 +17,7 @@ game = True
 
 # ----- Inicia assets
 image = pygame.image.load('imagens/base.webp').convert()
-ritsu= pygame.image.load("imagens/General_Ritsu_Base.png")
+ritsu= pygame.image.load("imagens/Ritsu/General_Ritsu_Base.png")
 
 
 # ===== Loop principal =====
