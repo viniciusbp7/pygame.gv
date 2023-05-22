@@ -2,7 +2,7 @@ import random
 # ===== Inicialização =====
 # ----- Importa e inicia pacotes
 import pygame
-
+import time
 pygame.init()
 
 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -74,6 +74,7 @@ while game:
     window.blit(hinoekagura, (60, HEIGHT-650))
     window.blit(veronica, (100, HEIGHT-350))
 
+
     # Wave 1----------------------------------------------------------------------------------------------------
 
     window.blit(lobo, (WIDTH-400,HEIGHT-210))
@@ -87,7 +88,7 @@ while game:
 
     # BOSS Wave-------------------------------------------------------------------------------------------------
 
-    #window.blit(elefante, (WIDTH-800,HEIGHT-600))
+    #window.blit(elefante, (WIDTH-800,HEIGHT-635))
 
     # ----- Atualiza estado do jogo
 
@@ -96,3 +97,4 @@ while game:
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
+ 
