@@ -15,7 +15,7 @@ game = True
 
 background = pygame.image.load('imagens/base.webp').convert()
 #background = pygame.image.load('imagens/Background.png').convert()
-ritsu = pygame.image.load("imagens/Ritsu/General_Ritsu_Base.png")
+ritsu = pygame.image.load("imagens/Ritsu/General_Ritsu_1.png")
 hinoekagura= pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
 veronica = pygame.image.load("imagens/Veronica/Veronica_Base.png")
 lobo = pygame.image.load("imagens/Mobs/Lobo_Base.png")
