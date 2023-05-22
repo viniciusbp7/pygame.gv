@@ -14,7 +14,6 @@ game = True
 # Importa os sprites de personagens e mobs------------------------------------------------------------------------
 
 background = pygame.image.load('imagens/base.webp').convert()
-#background = pygame.image.load('imagens/Background.png').convert()
 ritsu = pygame.image.load("imagens/Ritsu/General_Ritsu_Base.png")
 hinoekagura= pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
 veronica = pygame.image.load("imagens/Veronica/Veronica_Base.png")
@@ -68,11 +67,49 @@ while game:
     # Define o Background---------------------------------------------------------------------------------------
     window.blit(background, (0, 0))
 
-    # Posiciona os personagens em campo-------------------------------------------------------------------------
+    # Escreve o hp----------------------------------------------------------------------------------------------------
+
+    hp_r=str(300)
+    hp_v=str(450)
+    hp_h=str(150)
+    hp_l=str(300)
+    hp_la=str(800)
+    hp_e=str(3000)
+
+    font = pygame.font.SysFont(None, 48)
+
+    # HP  dos personagens-----------------------------------------------------------------------------------------------
+
+    HP_r=text = font.render(f'HP {hp_r} / 300', True, (46, 255, 0 ))
+    HP_v=text = font.render(f'HP {hp_v} / 450' , True, (46, 255, 0 ))
+    HP_h=text = font.render(f'HP {hp_h} / 150', True, (46, 255, 0 ))
+
+    # HP dos lobos (WAVE 1)---------------------------------------------------------------------------------------------
+
+    HP_l1=text = font.render(f'HP {hp_l} / 300', True, (239, 3, 3 ))
+    HP_l2=text = font.render(f'HP {hp_l} / 300', True, (239, 3, 3 ))
+    HP_l3=text = font.render(f'HP {hp_l} / 300', True, (239, 3, 3 ))
+
+    # HP dos lagartos (WAVE 2)-----------------------------------------------------------------------------------------
+
+    HP_la1=text = font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
+    HP_la2=text = font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
+
+    # HP do elefante (BOSS WAVE 3)-----------------------------------------------------------------------------------------
+
+    HP_e=text = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
+
+    # Posiciona os personagens em campo---------------------------------------------------------------------------------
 
     window.blit(ritsu, (360, HEIGHT-420))
     window.blit(hinoekagura, (60, HEIGHT-650))
     window.blit(veronica, (100, HEIGHT-350))
+
+    # Posiciona a barra de hp dos personagens--------------------------------------------------------------------------
+
+    window.blit(HP_r,(380, HEIGHT-460))
+    window.blit(HP_v,(120, HEIGHT-380))
+    window.blit(HP_h,(170, HEIGHT-690))
 
     # Wave 1----------------------------------------------------------------------------------------------------
 
@@ -80,14 +117,29 @@ while game:
     #window.blit(lobo, (WIDTH-700,HEIGHT-410))
     #window.blit(lobo, (WIDTH-400,HEIGHT-570))
 
+    # Posiciona o hp dos lobos----------------------------------------------------------------------------------
+
+    #window.blit(HP_l1,(WIDTH-350, HEIGHT-620))
+    #window.blit(HP_l2,(WIDTH-640, HEIGHT-450))
+    #window.blit(HP_l3,(WIDTH -350 , HEIGHT-260))
+
     # Wave 2----------------------------------------------------------------------------------------------------
 
-    #window.blit(lagarto, (WIDTH-630,HEIGHT-340))
-    #window.blit(lagarto, (WIDTH-630,HEIGHT-660))
+    window.blit(lagarto, (WIDTH-630,HEIGHT-340))
+    window.blit(lagarto, (WIDTH-630,HEIGHT-660))
+
+    # Posiciona o hp dos lagartos-------------------------------------------------------------------------------
+
+    window.blit(HP_la1,(WIDTH-700, HEIGHT-560))
+    window.blit(HP_la2,(WIDTH-700, HEIGHT-220))    
 
     # BOSS Wave-------------------------------------------------------------------------------------------------
 
     #window.blit(elefante, (WIDTH-800,HEIGHT-635))
+
+    # Posiciona o hp dos elefante-------------------------------------------------------------------------------
+
+    #window.blit(HP_e,(WIDTH-550, HEIGHT-700))
 
     # ----- Atualiza estado do jogo
 
