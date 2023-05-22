@@ -1,7 +1,7 @@
 import random
-# ===== Inicialização =====
-# ----- Importa e inicia pacotes
 import pygame
+import time 
+
 
 pygame.init()
 
