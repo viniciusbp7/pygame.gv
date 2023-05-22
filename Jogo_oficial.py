@@ -74,11 +74,12 @@ while game:
     window.blit(hinoekagura, (60, HEIGHT-650))
     window.blit(veronica, (100, HEIGHT-350))
 
+
     # Wave 1----------------------------------------------------------------------------------------------------
 
-    #window.blit(lobo, (WIDTH-400,HEIGHT-210))
-    #window.blit(lobo, (WIDTH-700,HEIGHT-410))
-    #window.blit(lobo, (WIDTH-400,HEIGHT-570))
+    window.blit(lobo, (WIDTH-400,HEIGHT-210))
+    window.blit(lobo, (WIDTH-700,HEIGHT-410))
+    window.blit(lobo, (WIDTH-400,HEIGHT-570))
 
     # Wave 2----------------------------------------------------------------------------------------------------
 
