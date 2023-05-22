@@ -14,7 +14,6 @@ game = True
 # Importa os sprites de personagens e mobs------------------------------------------------------------------------
 
 background = pygame.image.load('imagens/base.webp').convert()
-#background = pygame.image.load('imagens/Background.png').convert()
 ritsu = pygame.image.load("imagens/Ritsu/General_Ritsu_Base.png")
 hinoekagura= pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
 veronica = pygame.image.load("imagens/Veronica/Veronica_Base.png")
@@ -126,13 +125,13 @@ while game:
 
     # Wave 2----------------------------------------------------------------------------------------------------
 
-    #window.blit(lagarto, (WIDTH-630,HEIGHT-340))
-    #window.blit(lagarto, (WIDTH-630,HEIGHT-660))
+    window.blit(lagarto, (WIDTH-630,HEIGHT-340))
+    window.blit(lagarto, (WIDTH-630,HEIGHT-660))
 
     # Posiciona o hp dos lagartos-------------------------------------------------------------------------------
 
-    #window.blit(HP_la1,(WIDTH-700, HEIGHT-560))
-    #window.blit(HP_la2,(WIDTH-700, HEIGHT-220))    
+    window.blit(HP_la1,(WIDTH-700, HEIGHT-560))
+    window.blit(HP_la2,(WIDTH-700, HEIGHT-220))    
 
     # BOSS Wave-------------------------------------------------------------------------------------------------
 
