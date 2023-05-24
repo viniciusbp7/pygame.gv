@@ -259,7 +259,7 @@ def game_screen(screen):
     # Carrega spritesheet
     veronica_sheet = pygame.image.load(path.join(img_dir, 'Veronica/Veronica_spritesheet_regular.png')).convert_alpha()
     ritsu_sheet = pygame.image.load(path.join(img_dir, "Ritsu/General_Ritsu_spritesheet_regular.png")).convert_alpha()
-    hinoekagura_sheet = pygame.image.load(path.join(img_dir, "Hinoekagura/Hinoekagura_spritesheet_regular2.png")).convert_alpha()
+    hinoekagura_sheet = pygame.image.load(path.join(img_dir, "Hinoekagura/Hinoekagura_spritesheet_regular.png")).convert_alpha()
     # Cria Sprite do jogador
 
     veronica = Veronica(veronica_sheet)
