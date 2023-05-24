@@ -144,3 +144,5 @@ while game:
     # ----- Atualiza estado do jogo
 
     pygame.display.update()  # Mostra o novo frame para o jogador
+
+pygame.quit()
