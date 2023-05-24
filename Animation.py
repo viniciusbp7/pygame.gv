@@ -195,9 +195,9 @@ class Hinoekagura(pygame.sprite.Sprite):
         hinoekagura_sheet = pygame.transform.scale(hinoekagura_sheet, (860, 225))
 
         # Define sequências de sprites de cada animação
-        spritesheet_H = load_spritesheet(hinoekagura_sheet, 1, 3)
+        spritesheet_H = load_spritesheet(hinoekagura_sheet, 1, 4)
         self.animations = {
-            STILL: spritesheet_H[0:3]
+            STILL: spritesheet_H[0:5]
         }
         # Define estado atual (que define qual animação deve ser mostrada)
         self.state = STILL
@@ -209,15 +209,15 @@ class Hinoekagura(pygame.sprite.Sprite):
         # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
         
-        self.rect.centerx = 210
-        self.rect.centery = HEIGHT-670
+        self.rect.centerx = 200
+        self.rect.centery = HEIGHT-570
 
 
         # Guarda o tick da primeira imagem
         self.last_update = pygame.time.get_ticks()
 
         # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
-        self.frame_ticks = 280
+        self.frame_ticks = 290
 
     def update(self):
         # Verifica o tick atual.
@@ -249,8 +249,8 @@ class Hinoekagura(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.center = center
 
-            self.rect.centerx = 210
-            self.rect.centery = HEIGHT-670
+            self.rect.centerx = 200
+            self.rect.centery = HEIGHT-570
 
 def game_screen(screen):
     # Variável para o ajuste de velocidade
