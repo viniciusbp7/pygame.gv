@@ -217,7 +217,7 @@ class Hinoekagura(pygame.sprite.Sprite):
         self.last_update = pygame.time.get_ticks()
 
         # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
-        self.frame_ticks = 290
+        self.frame_ticks = 420
 
     def update(self):
         # Verifica o tick atual.
@@ -252,6 +252,76 @@ class Hinoekagura(pygame.sprite.Sprite):
             self.rect.centerx = 200
             self.rect.centery = HEIGHT-570
 
+class Elefante(pygame.sprite.Sprite):
+    
+    # Construtor da classe. O argumento player_sheet é uma imagem contendo um spritesheet.
+    def __init__(self, elefante_sheet):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
+        elefante_sheet = pygame.transform.scale(elefante_sheet, (1460, 445))
+
+        # Define sequências de sprites de cada animação
+        spritesheet_E = load_spritesheet(elefante_sheet, 1, 3)
+        self.animations = {
+            STILL: spritesheet_E[0:3]
+        }
+        # Define estado atual (que define qual animação deve ser mostrada)
+        self.state = STILL
+        # Define animação atual
+        self.animation = self.animations[self.state]
+        # Inicializa o primeiro quadro da animação
+        self.frame = 0
+        self.image = self.animation[self.frame]
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        self.rect.centerx = WIDTH-400
+        self.rect.centery = HEIGHT-395
+
+
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 290
+
+    def update(self):
+        # Verifica o tick atual.
+        now = pygame.time.get_ticks()
+
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.frame += 1
+
+            # Atualiza animação atual
+            self.animation = self.animations[self.state]
+            # Reinicia a animação caso o índice da imagem atual seja inválido
+            if self.frame >= len(self.animation):
+                self.frame = 0
+            
+            # Armazena a posição do centro da imagem
+            center = self.rect.center
+            # Atualiza imagem atual
+            self.image = self.animation[self.frame]
+            # Atualiza os detalhes de posicionamento
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+
+            self.rect.centerx = WIDTH-400
+            self.rect.centery = HEIGHT-395
+
+
 def game_screen(screen):
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
@@ -260,19 +330,21 @@ def game_screen(screen):
     veronica_sheet = pygame.image.load(path.join(img_dir, 'Veronica/Veronica_spritesheet_regular.png')).convert_alpha()
     ritsu_sheet = pygame.image.load(path.join(img_dir, "Ritsu/General_Ritsu_spritesheet_regular.png")).convert_alpha()
     hinoekagura_sheet = pygame.image.load(path.join(img_dir, "Hinoekagura/Hinoekagura_spritesheet_regular.png")).convert_alpha()
+    elefane_sheet = pygame.image.load(path.join(img_dir, "Mobs/Elefante_spritesheet_regular.png")).convert_alpha()
+
     # Cria Sprite do jogador
 
     veronica = Veronica(veronica_sheet)
     ritsu = Ristu(ritsu_sheet)
     hinoekagura=Hinoekagura(hinoekagura_sheet)
-
+    elefante= Elefante(elefane_sheet)
     # Cria um grupo de todos os sprites e adiciona o jogador.
 
     all_sprites = pygame.sprite.Group()
     all_sprites.add(veronica)
     all_sprites.add(ritsu)
     all_sprites.add(hinoekagura)
-
+    all_sprites.add(elefante)
     PLAYING = 0
     DONE = 1
 
@@ -331,7 +403,7 @@ def game_screen(screen):
         window.blit(HP_r,(360, HEIGHT-460))
         window.blit(HP_v,(110, HEIGHT-380))
         window.blit(HP_h,(130, HEIGHT-730))
-
+        window.blit(HP_e,(WIDTH-540, HEIGHT-640))
         # Depois de desenhar tudo, inverte o display.
 
         pygame.display.flip()
