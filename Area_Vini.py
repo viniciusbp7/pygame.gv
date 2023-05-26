@@ -488,7 +488,6 @@ def game_screen(screen):
 
         # HP do elefante (BOSS WAVE 3)-----------------------------------------------------------------------------------------
         if wave ==2:
-
             all_sprites.add(elefante)
             
             HP_e = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
@@ -537,4 +536,4 @@ print('*' * len(TITULO))
 try:
     game_screen(screen)
 finally:
-    pygame.quit()
+    pygame.quit()   
