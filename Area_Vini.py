@@ -255,8 +255,6 @@ class Hinoekagura(pygame.sprite.Sprite):
             self.rect.centerx = 200
             self.rect.centery = HEIGHT-570
 
-# Classes dos inimigos---------------------------------------------------------------------------------------------
-
 # Classes dos lobos--------------------------------------------------------------------------------------------------------
 
 class Lobo1(pygame.sprite.Sprite):
@@ -721,7 +719,15 @@ def game_screen(screen):
     all_sprites.add(ritsu)
     all_sprites.add(hinoekagura)
 
-    
+    # Cria os prompts de ataque----------------------------------------------------------------------------------------------
+
+    cor=(32, 29, 27)
+
+    vertices1=[(WIDTH-1000,HEIGHT-30),(WIDTH-1000,HEIGHT-130),(WIDTH-800,HEIGHT-130),(WIDTH-800,HEIGHT-30)]
+
+    vertices2=[(WIDTH-750,HEIGHT-30),(WIDTH-750,HEIGHT-130),(WIDTH-550,HEIGHT-130),(WIDTH-550,HEIGHT-30)]
+    #pygame.draw.polygon(window,cor,vertices2)
+
     # Inicia o loop principal do jogo------------------------------------------------------------------------------------------
 
     PLAYING = 0
@@ -730,13 +736,16 @@ def game_screen(screen):
     hp_r=(300)
     hp_v=(450)
     hp_h=(150)
-    hp_l={'lobo1':300, 'lobo2':300, 'lobo3':300}
-    hp_la=(800)
+    hp_l={'lobo1':700, 'lobo2':700, 'lobo3':700}
+    hp_la={'lagarto1':1600, 'lagarto2':1600}
     hp_e=(3000)
+
+    # Jogo principal---------------------------------------------------------------------------------------------------------
 
     turno=0
 
     state = PLAYING
+
     while state != DONE:
 
         clock.tick(FPS)
@@ -754,49 +763,48 @@ def game_screen(screen):
         HP_v= font.render(f'HP {hp_v} / 450' , True, (46, 255, 0 ))
         HP_h = font.render(f'HP {hp_h} / 150', True, (46, 255, 0 ))
 
-        wave=2
-
+        wave=1
+            
         if wave==1:
 
             all_sprites.add(lobo1)
             all_sprites.add(lobo2)
             all_sprites.add(lobo3)
 
-            # HP dos lobos (WAVE 1)---------------------------------------------------------------------------------------------
-
-            
-
-            HP_l1= font.render(f'HP {hp_l["lobo1"]} / 300', True, (239, 3, 3 ))
-            #HP_l2= font.render(f'HP {hp_l["lobo2"]} / 300', True, (239, 3, 3 ))
-            #HP_l3= font.render(f'HP {hp_l["lobo3"]} / 300', True, (239, 3, 3 ))
-
-            #hp_l["lobo1"]-=1
-
-            #if hp_l['lobo1']>0:
-                #window.blit(HP_l1,(WIDTH-540, HEIGHT-640))
+            HP_l1= font.render(f'HP {hp_l["lobo1"]} / 700', True, (239, 3, 3 ))
+            HP_l2= font.render(f'HP {hp_l["lobo2"]} / 700', True, (239, 3, 3 ))
+            HP_l3= font.render(f'HP {hp_l["lobo3"]} / 700', True, (239, 3, 3 ))
 
             if hp_l['lobo1']<=0:
                 all_sprites.remove(lobo1)
+
+            if hp_l['lobo2']<=0:
+                all_sprites.remove(lobo2)
+            
+            if hp_l['lobo3']<=0:
+                all_sprites.remove(lobo3)
+
+            if hp_l['lobo1']<=0  and hp_l['lobo2']<=0 and hp_l['lobo3']<=0 :
                 wave = 2
 
         # HP dos lagartos (WAVE 2)-----------------------------------------------------------------------------------------
-
-        HP_la1= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
-        HP_la2= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
 
         if wave ==2:
 
             all_sprites.add(lagarto1)
             all_sprites.add(lagarto2)
 
-            HP_la1= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
-            HP_la2= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
+            HP_la1= font.render(f'HP {hp_la["lagarto1"]} / 1600' , True, (239, 3, 3 ))
+            HP_la2= font.render(f'HP {hp_la["lagarto2"]} / 1600' , True, (239, 3, 3 ))
 
-            hp_la-=1
+            if hp_la['lagarto1']<=0:
+                all_sprites.remove(lagarto1)
 
-            window.blit(HP_la1,(WIDTH-540, HEIGHT-640))
+            if hp_la['lagarto2']<=0:
+                all_sprites.remove(lagarto2)
 
-
+            if hp_la['lagarto1']<=0 and hp_la['lagarto2']<=0:
+                wave=3
 
         # HP do elefante (BOSS WAVE 3)-----------------------------------------------------------------------------------------
 
@@ -805,8 +813,6 @@ def game_screen(screen):
             all_sprites.add(elefante)
             
             HP_e = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
-
-            hp_e-=1
 
             if hp_e>0:
                 window.blit(HP_e,(WIDTH-540, HEIGHT-640))
@@ -827,8 +833,35 @@ def game_screen(screen):
         window.blit(HP_r,(360, HEIGHT-460))
         window.blit(HP_v,(110, HEIGHT-380))
         window.blit(HP_h,(130, HEIGHT-730))
-        #window.blit(HP_l1,(WIDTH-540, HEIGHT-640))
+        
 
+
+        if wave==1:
+
+            if hp_l['lobo1']>0:
+                    window.blit(HP_l1,(WIDTH-400, HEIGHT-640))
+            
+            if hp_l['lobo2']>0:
+                    window.blit(HP_l2,(WIDTH-660, HEIGHT-520))
+
+            if hp_l['lobo3']>0:
+                    window.blit(HP_l3,(WIDTH-420, HEIGHT-310))
+
+        if wave ==2:
+            
+            if hp_la['lagarto1']>0:
+                    window.blit(HP_la1,(WIDTH-720, HEIGHT-610))
+
+            if hp_la['lagarto2']>0:
+                    window.blit(HP_la2,(WIDTH-720, HEIGHT-280))
+
+        if wave ==3:
+
+            if hp_e>0:
+                    window.blit(HP_e,(WIDTH-520, HEIGHT-620))
+
+        pygame.draw.polygon(window,cor,vertices1)
+        pygame.draw.polygon(window,cor,vertices2)
         pygame.display.flip()
 
 # Inicialização do Pygame-----------------------------------------------------------------------------------------------
