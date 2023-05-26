@@ -473,14 +473,15 @@ def game_screen(screen):
 
             
 
-            HP_l1= font.render(f'HP {hp_l["lobo1"]} / 300', True, (239, 3, 3 ))
+            HP_ene= font.render(f'HP {hp_l["lobo1"]} / 300', True, (239, 3, 3 ))
             #HP_l2= font.render(f'HP {hp_l["lobo2"]} / 300', True, (239, 3, 3 ))
             #HP_l3= font.render(f'HP {hp_l["lobo3"]} / 300', True, (239, 3, 3 ))
 
             hp_l["lobo1"]-=1
+            
 
         
-            window.blit(HP_l1,(WIDTH-540, HEIGHT-640))
+            window.blit(HP_ene,(WIDTH-540, HEIGHT-640))
 
             if hp_l['lobo1']<=0:
                 all_sprites.remove(lobo)
@@ -495,18 +496,16 @@ def game_screen(screen):
         if wave ==2:
             all_sprites.add(elefante)
             
-            HP_e = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
+            HP_ene = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
 
             hp_e-=1
 
             if hp_e>0:
-                window.blit(HP_e,(WIDTH-540, HEIGHT-640))
+                window.blit(HP_ene,(WIDTH-540, HEIGHT-640))
 
             if hp_e<=0:
                 all_sprites.remove(elefante)
                 
-
-
 
         # Atualiza a acao de cada sprite------------------------------------------------------------------------------------
         all_sprites.update()
@@ -518,7 +517,7 @@ def game_screen(screen):
         window.blit(HP_r,(360, HEIGHT-460))
         window.blit(HP_v,(110, HEIGHT-380))
         window.blit(HP_h,(130, HEIGHT-730))
-        window.blit(HP_l1,(WIDTH-540, HEIGHT-640))
+        window.blit(HP_ene,(WIDTH-540, HEIGHT-640))
 
         pygame.display.flip()
 
