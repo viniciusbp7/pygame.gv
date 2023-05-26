@@ -5,6 +5,11 @@ from os import path
 
 img_dir = path.join(path.dirname(__file__), 'imagens')
 
+#Estabelece os sons.
+pygame.mixer.init()
+pygame.mixer.music.load('sons/corrupted-violin-fencer-boss-theme.mp3')
+pygame.mixer.music.set_volume(0.4)
+
 # Define dados iniciais para as funções------------------------------------------------------------------------
 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 STILL = 0
@@ -439,7 +444,7 @@ def game_screen(screen):
     hp_l={'lobo1':300, 'lobo2':300, 'lobo3':300}
     hp_la=(800)
     hp_e=(3000)
-
+    pygame.mixer.music.play(loops=-1)
     state = PLAYING
     while state != DONE:
 
