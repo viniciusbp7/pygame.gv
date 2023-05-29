@@ -19,6 +19,7 @@ WIDTH = window.get_width()
 HEIGHT = window.get_height()
 FPS = 60 # Frames por segundo
 background = pygame.image.load('imagens/base.webp')
+Win_stat=pygame.image.load('imagens/WIN.webp')
 gameover=pygame.image.load('imagens/GAMEOVER.png')
 start=pygame.image.load("imagens/Start!.png")
 pygame.display.set_caption('Hello World!')
@@ -739,6 +740,7 @@ def game_screen(screen):
     end=3
     PLAYING = 0
     DONE = 1
+    vit=4
 
     hp_r=(300)
     hp_v=(450)
@@ -806,7 +808,7 @@ def game_screen(screen):
             if not(ha and ra and va):
                 state=end
 
-            wave=3
+            wave=1
                 
             if wave==1:
 
@@ -1511,14 +1513,19 @@ def game_screen(screen):
                                         hit=1
                                         turno=0   
                                         tempo_a=pygame.time.get_ticks()
-
+        
         if state==end:
             background_end = pygame.transform.scale(gameover, (WIDTH, HEIGHT))
             window.blit(background_end, (0, 0))
             pygame.display.flip()
             pygame.time.delay(5000)
             break
-
+        if hp_e<=0:
+            background_vit = pygame.transform.scale(Win_stat, (WIDTH, HEIGHT))
+            window.blit(background_vit, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(5000)
+            break        
         pygame.display.flip()
 
 # Inicialização do Pygame-----------------------------------------------------------------------------------------------
