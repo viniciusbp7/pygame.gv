@@ -6,6 +6,11 @@ import random
 
 img_dir = path.join(path.dirname(__file__), 'imagens')
 
+#Estabelece os sons.
+pygame.mixer.init()
+pygame.mixer.music.load('sons/corrupted-violin-fencer-boss-theme.mp3')
+pygame.mixer.music.set_volume(0.4)
+
 # Define dados iniciais para as funções------------------------------------------------------------------------
 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 STILL = 0
@@ -14,7 +19,8 @@ WIDTH = window.get_width()
 HEIGHT = window.get_height()
 FPS = 60 # Frames por segundo
 background = pygame.image.load('imagens/base.webp')
-hinoekagura= pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
+gameover=pygame.image.load('imagens/GAMEOVER.png')
+start=pygame.image.load("imagens/Start!.png")
 pygame.display.set_caption('Hello World!')
 
 game=True
@@ -729,7 +735,8 @@ def game_screen(screen):
     vertices2=[(WIDTH-750,HEIGHT-30),(WIDTH-750,HEIGHT-130),(WIDTH-550,HEIGHT-130),(WIDTH-550,HEIGHT-30)]
 
     # Inicia o loop principal do jogo------------------------------------------------------------------------------------------
-
+    init = 2 
+    end=3
     PLAYING = 0
     DONE = 1
 
@@ -739,7 +746,7 @@ def game_screen(screen):
     hp_l={'lobo1':700, 'lobo2':700, 'lobo3':700}
     hp_la={'lagarto1':1600, 'lagarto2':1600}
     hp_e=(3000)
-
+    pygame.mixer.music.play(loops=-1)
     turno=0
     deca=0
     ag=0
@@ -755,7 +762,7 @@ def game_screen(screen):
 
     # Jogo principal---------------------------------------------------------------------------------------------------------
 
-    state = PLAYING
+    state = init
 
     while state != DONE:
 
@@ -770,727 +777,747 @@ def game_screen(screen):
 
         # HP  dos personagens-----------------------------------------------------------------------------------------------
 
-        HP_r= font.render(f'HP {hp_r} / 300', True, (46, 255, 0 ))
-        HP_v= font.render(f'HP {hp_v} / 450' , True, (46, 255, 0 ))
-        HP_h = font.render(f'HP {hp_h} / 225', True, (46, 255, 0 ))
+        if state==init:
+            window.blit(start,(WIDTH-1550, HEIGHT-850))
+            call=font.render(f'Pressione as setas!', True, (255, 255, 255 ))
+            call = pygame.transform.scale(call, (600, 150))
+            window.blit(call,(WIDTH-740, HEIGHT-140))
+            if event.type == pygame.KEYDOWN:
+                state = PLAYING
 
-        if hp_r<=0:
-            all_sprites.remove(ritsu)
-            ra=False
-        
-        if hp_h<=0:
-            all_sprites.remove(hinoekagura)
-            ha=False
-        
-        if hp_v<=0:
-            all_sprites.remove(veronica)
-            va=False
+        if state==PLAYING:
 
-        wave=3
+            HP_r= font.render(f'HP {hp_r} / 300', True, (46, 255, 0 ))
+            HP_v= font.render(f'HP {hp_v} / 450' , True, (46, 255, 0 ))
+            HP_h = font.render(f'HP {hp_h} / 225', True, (46, 255, 0 ))
+
+            if hp_r<=0:
+                all_sprites.remove(ritsu)
+                ra=False
             
-        if wave==1:
-
-            all_sprites.add(lobo1)
-            all_sprites.add(lobo2)
-            all_sprites.add(lobo3)
-
-            HP_l1= font.render(f'HP {hp_l["lobo1"]} / 700', True, (239, 3, 3 ))
-            HP_l2= font.render(f'HP {hp_l["lobo2"]} / 700', True, (239, 3, 3 ))
-            HP_l3= font.render(f'HP {hp_l["lobo3"]} / 700', True, (239, 3, 3 ))
-
-            if hp_l['lobo1']<=0:
-                all_sprites.remove(lobo1)
-
-            if hp_l['lobo2']<=0:
-                all_sprites.remove(lobo2)
+            if hp_h<=0:
+                all_sprites.remove(hinoekagura)
+                ha=False
             
-            if hp_l['lobo3']<=0:
-                all_sprites.remove(lobo3)
+            if hp_v<=0:
+                all_sprites.remove(veronica)
+                va=False
 
-            if hp_l['lobo1']<=0  and hp_l['lobo2']<=0 and hp_l['lobo3']<=0 :
-                wave = 2
+            if not(ha and ra and va):
+                state=end
 
-        # HP dos lagartos (WAVE 2)-----------------------------------------------------------------------------------------
-
-        if wave ==2:
-
-            all_sprites.add(lagarto1)
-            all_sprites.add(lagarto2)
-
-            HP_la1= font.render(f'HP {hp_la["lagarto1"]} / 1600' , True, (239, 3, 3 ))
-            HP_la2= font.render(f'HP {hp_la["lagarto2"]} / 1600' , True, (239, 3, 3 ))
-
-            if hp_la['lagarto1']<=0:
-                all_sprites.remove(lagarto1)
-
-            if hp_la['lagarto2']<=0:
-                all_sprites.remove(lagarto2)
-
-            if hp_la['lagarto1']<=0 and hp_la['lagarto2']<=0:
-                wave=3
-
-        # HP do elefante (BOSS WAVE 3)-----------------------------------------------------------------------------------------
-
-        if wave ==3:
-
-            all_sprites.add(elefante)
-            
-            HP_e = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
-
-            if hp_e>0:
-                window.blit(HP_e,(WIDTH-540, HEIGHT-640))
-
-            if hp_e<=0:
-                all_sprites.remove(elefante)
+            wave=3
                 
-
-
-
-        # Atualiza a acao de cada sprite------------------------------------------------------------------------------------
-        all_sprites.update()
-        
-        
-        window.blit(background, (0, 0))
-        all_sprites.draw(screen)
-
-        if ra:
-            window.blit(HP_r,(360, HEIGHT-460))
-        if va:
-            window.blit(HP_v,(110, HEIGHT-380))
-        if ha:
-            window.blit(HP_h,(130, HEIGHT-730))
-        
-        if wave==1:
-
-            if hp_l['lobo1']>0:
-                    window.blit(HP_l1,(WIDTH-400, HEIGHT-640))
-            
-            if hp_l['lobo2']>0:
-                    window.blit(HP_l2,(WIDTH-660, HEIGHT-520))
-
-            if hp_l['lobo3']>0:
-                    window.blit(HP_l3,(WIDTH-420, HEIGHT-310))
-
-        if wave ==2:
-            
-            if hp_la['lagarto1']>0:
-                    window.blit(HP_la1,(WIDTH-720, HEIGHT-610))
-
-            if hp_la['lagarto2']>0:
-                    window.blit(HP_la2,(WIDTH-720, HEIGHT-280))
-
-        if wave ==3:
-
-            if hp_e>0:
-                    window.blit(HP_e,(WIDTH-520, HEIGHT-620))
-
-        aviso_de_ataque=font.render('Selecione o ataque', True, (255, 240, 0))
-        selecao_de_alvo= font.render('Selecione o alvo', True, (255, 255, 255 ))
-
-        # Mecanica de combate do jogo-------------------------------------------------------------------------------------
-
-        #Turno da Hinoekaura----------------------------------------------------------------------------------------------
-
-        if turno==0:
-            
-            if not ha:
-                turno=1
-
-            pygame.draw.polygon(window,cor,vertices1)
-            pygame.draw.polygon(window,cor,vertices2)
-
-            cura= font.render('Cura', True, (255, 255, 255 ))
-            magia= font.render('Explosão', True, (255, 255, 255 ))
-
-            window.blit(aviso_de_ataque, (WIDTH-930,HEIGHT-175 ))
-            window.blit(cura, (WIDTH-695,HEIGHT-95 ))
-            window.blit(magia, (WIDTH-980,HEIGHT-95))
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                cl=0
-
             if wave==1:
-                
-                (x, y)= pygame.mouse.get_pos()
 
-                if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                            hp_l['lobo1']-=75
-                            hp_l['lobo2']-=75
-                            hp_l['lobo3']-=75
-                            cl=1
-                            turno=1
+                all_sprites.add(lobo1)
+                all_sprites.add(lobo2)
+                all_sprites.add(lobo3)
 
-                if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                HP_l1= font.render(f'HP {hp_l["lobo1"]} / 700', True, (239, 3, 3 ))
+                HP_l2= font.render(f'HP {hp_l["lobo2"]} / 700', True, (239, 3, 3 ))
+                HP_l3= font.render(f'HP {hp_l["lobo3"]} / 700', True, (239, 3, 3 ))
 
-                            if hp_r + 100 > 300:
-                                hp_r=300
-                            else:
-                                hp_r+=100
-                            
-                            if hp_h+100 > 225:
-                                hp_h=225
-                            else:
-                                hp_h+=100
-
-                            if hp_v+100>450:
-                                hp_v=450
-                            else:
-                                hp_v+=100
-                            cl=1
-                            turno=1
-
-            if wave==2:
-
-                (x, y)= pygame.mouse.get_pos()
-                if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                            hp_la['lagarto1']-=75
-                            hp_la['lagarto2']-=75
-                            cl=1
-                            turno=1
-
-                if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            if hp_r + 100 > 300:
-                                hp_r=300
-                            else:
-                                hp_r+=100
-                            
-                            if hp_h+100 > 225:
-                                hp_h=225
-                            else:
-                                hp_h+=100
-
-                            if hp_v+100>450:
-                                hp_v=450
-                            else:
-                                hp_v+=100
-                            cl=1
-                            turno=1
-            
-            if wave==3:
-                (x, y)= pygame.mouse.get_pos()
-                if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:                       
-                            hp_e-=75
-                            cl=1
-                            turno=1
-
-                if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            if hp_r + 100 > 300:
-                                hp_r=300
-                            else:
-                                hp_r+=100
-                            
-                            if hp_h+100 > 225:
-                                hp_h=225
-                            else:
-                                hp_h+=100
-
-                            if hp_v+100>450:
-                                hp_v=450
-                            else:
-                                hp_v+=100
-                            cl=1
-                            turno=1
-                            cl=1
-                            turno=1
-
-        # Turno do Ritsu---------------------------------------------------------------------------------------------------
-
-        if turno==1:
-
-            if not ra:
-                turno=2
-
-            pygame.draw.polygon(window,cor,vertices1)
-            pygame.draw.polygon(window,cor,vertices2)
-
-
-            decapitar= font.render('Decapitar', True, (255, 255, 255 ))
-            corte= font.render('Corte', True, (255, 255, 255 ))
-
-
-            window.blit(aviso_de_ataque, (WIDTH-930,HEIGHT-175 ))
-            window.blit(decapitar, (WIDTH-720,HEIGHT-95 ))
-            window.blit(corte, (WIDTH-945,HEIGHT-95))
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                cl=0
-
-            if wave==1:
-                
-                (x, y)= pygame.mouse.get_pos()
-
-                if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                            hp_l['lobo1']-=100
-                            hp_l['lobo2']-=100
-                            hp_l['lobo3']-=100
-                            cl=1
-                            turno=2
-
-
-                if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                    deca=1
-                
-                if deca==1:
-                    window.blit(selecao_de_alvo, (WIDTH-930,HEIGHT-675 ))
-
-                if (x >= WIDTH-400 and x<=WIDTH-180) and (y <= HEIGHT-330 and y>=HEIGHT-600) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_l['lobo1']-=225
-                        cl=1
-                        deca=0
-                        turno=2
-
-                if (x >= WIDTH-660 and x<=WIDTH-450) and (y <= HEIGHT-230 and y>=HEIGHT-480) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_l['lobo2']-=225
-                        cl=1
-                        turno=2
-
-                if (x >= WIDTH-420 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-280) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_l['lobo3']-=225
-                        cl=1
-                        turno=2
-
-            if wave==2:
-
-                (x, y)= pygame.mouse.get_pos()
-                if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                            hp_la['lagarto1']-=100
-                            hp_la['lagarto2']-=100
-                            cl=1
-                            turno=2
-
-                if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                    deca=1
-                
-                if deca==1:
-                    window.blit(selecao_de_alvo, (WIDTH-930,HEIGHT-750 ))
-
-                if (x >= WIDTH-530 and x<=WIDTH-220) and (y <= HEIGHT-330 and y>=HEIGHT-580) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_la['lagarto1']-=225
-                        cl=1
-                        deca=0
-                        turno=2
-
-                if (x >= WIDTH-520 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-260) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_la['lagarto2']-=225
-                        cl=1
-                        turno=2
-
-            
-            if wave==3:
-                (x, y)= pygame.mouse.get_pos()
-                if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                            hp_e-=100
-                            cl=1
-                            turno=2
-
-                if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_e-=225
-                            cl=1
-                            deca=0
-                            turno=2
-
-        # Turno da Veronica----------------------------------------------------------------------------------------------------------------
-        if turno==2:
-            if not va:
-                turno=3
-
-            pygame.draw.polygon(window,cor,vertices1)
-            pygame.draw.polygon(window,cor,vertices2)
-
-
-            uppercut= font.render('Uppercut', True, (255, 255, 255 ))
-            aggro= font.render('Aggro', True, (255, 255, 255 ))
-
-
-            window.blit(aviso_de_ataque, (WIDTH-930,HEIGHT-175 ))
-            window.blit(uppercut, (WIDTH-720,HEIGHT-95 ))
-            window.blit(aggro, (WIDTH-955,HEIGHT-95))
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                cl=0
-
-            if wave==1:
-                
-                (x, y)= pygame.mouse.get_pos()
-
-                if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                            ag=1
-                            cl=1
-                            turno=3
-                            tempo_a=pygame.time.get_ticks()
-
-
-                if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                    deca=1
-                    ag=0
-                
-                if deca==1:
-                    window.blit(selecao_de_alvo, (WIDTH-930,HEIGHT-675 ))
-
-                if (x >= WIDTH-400 and x<=WIDTH-180) and (y <= HEIGHT-330 and y>=HEIGHT-600) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_l['lobo1']-=175
-                        cl=1
-                        deca=0
-                        turno=3
-                        tempo_a=pygame.time.get_ticks()
-
-                if (x >= WIDTH-660 and x<=WIDTH-450) and (y <= HEIGHT-230 and y>=HEIGHT-480) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_l['lobo2']-=175
-                        cl=1
-                        turno=3
-                        tempo_a=pygame.time.get_ticks()
-
-                if (x >= WIDTH-420 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-280) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_l['lobo3']-=175
-                        cl=1
-                        turno=3
-                        tempo_a=pygame.time.get_ticks()
-
-            if wave==2:
-
-                (x, y)= pygame.mouse.get_pos()
-                if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                            ag=1
-                            cl=1
-                            turno=3
-                            tempo_a=pygame.time.get_ticks()
-
-                if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                    deca=1
-                    ag=0
-                
-                if deca==1:
-                    window.blit(selecao_de_alvo, (WIDTH-930,HEIGHT-750 ))
-
-                if (x >= WIDTH-530 and x<=WIDTH-220) and (y <= HEIGHT-330 and y>=HEIGHT-580) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_la['lagarto1']-=175
-                        cl=1
-                        deca=0
-                        turno=3
-                        tempo_a=pygame.time.get_ticks()
-
-                if (x >= WIDTH-520 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-260) and deca==1:
-                    if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                        hp_la['lagarto2']-=175
-                        cl=1
-                        turno=3
-                        tempo_a=pygame.time.get_ticks()
-
-            
-            if wave==3:
-                (x, y)= pygame.mouse.get_pos()
-                if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                            ag=1
-                            cl=1
-                            turno=3
-                            tempo_a=pygame.time.get_ticks()
-
-                if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
-                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            ag=0
-                            hp_e-=175
-                            cl=1
-                            deca=0
-                            turno=3
-                            tempo_a=pygame.time.get_ticks()
-
-        # Turno dos inimigos-------------------------------------------------------------------------------------------------------
-        # Wave dos lobos--------------------------------------------------------------------------------------------------
-        if wave ==1:
-            if turno==3:
-                hit=0
                 if hp_l['lobo1']<=0:
-                    turno=4
-                agora=pygame.time.get_ticks()
-                if agora-tempo_a>3000: 
-                    if hp_l['lobo1']>0:
-                        if va and ra and ha:
-                            tg=random.randint(1, 3)
-                        if (va and ha) and not ra:
-                            tg=random.randint(1,3,2)
-                        if(va and ra) and not ha:
-                            tg=random.randint(2,3)
-                        if (ra and ha) and not va:
-                            tg=random.randint(1,2)
-                        if ra and not (ha and va):
-                            tg=2
-                        if ha and not (ra and va):
-                            tg=1
-                        if va and not (ra and ha):
-                            tg=3
+                    all_sprites.remove(lobo1)
 
-                        if va and ag==1:
-                            hp_v-=50/2
-                            turno=4
-                            tempo_a=pygame.time.get_ticks()
-                        else:
-                            if tg==1 and hit==0:
-                                hp_h-=50
-                                hit=1
-                                turno=4
-                                tempo_a=pygame.time.get_ticks()
-                            if tg==2 and hit==0:
-                                hp_r-=50
-                                hit=1
-                                turno=4
-                                tempo_a=pygame.time.get_ticks()
-                            if tg==3 and hit==0:
-                                hp_v-=50
-                                hit=1
-                                turno=4
-                                tempo_a=pygame.time.get_ticks()
-
-            if turno==4:
-                hit=0
                 if hp_l['lobo2']<=0:
-                    turno=5
-                agora=pygame.time.get_ticks()
-                if agora-tempo_a>3000: 
-                    if hp_l['lobo2']>0:
-                            
-                        if va and ra and ha:
-                            tg=random.randint(1, 3)
-                        if (va and ha) and not ra:
-                            tg=random.randint(1,3,2)
-                        if(va and ra) and not ha:
-                            tg=random.randint(2,3)
-                        if (ra and ha) and not va:
-                            tg=random.randint(1,2)
-                        if ra and not (ha and va):
-                            tg=2
-                        if ha and not (ra and va):
-                            tg=1
-                        if va and not (ra and ha):
-                            tg=3
-
-                        if va and ag==1:
-                            hp_v-=50/2
-                            turno=5
-                            tempo_a=pygame.time.get_ticks()
-                        else:
-                            if tg==1 and hit==0:
-                                hp_h-=50
-                                hit=1
-                                turno=5
-                                tempo_a=pygame.time.get_ticks()
-                            if tg==2 and hit==0:
-                                hp_r-=50
-                                hit=1
-                                turno=5
-                                tempo_a=pygame.time.get_ticks()
-                            if tg==3 and hit==0:
-                                hp_v-=50
-                                hit=1
-                                turno=5   
-                                tempo_a=pygame.time.get_ticks()
-                    
-            if turno==5:
-                hit=0
+                    all_sprites.remove(lobo2)
+                
                 if hp_l['lobo3']<=0:
-                    turno=0
-                agora=pygame.time.get_ticks()
-                if agora-tempo_a>3000: 
-                    if hp_l['lobo3']>0:
-                            
-                        if va and ra and ha:
-                            tg=random.randint(1, 3)
-                        if (va and ha) and not ra:
-                            tg=random.randint(1,3,2)
-                        if(va and ra) and not ha:
-                            tg=random.randint(2,3)
-                        if (ra and ha) and not va:
-                            tg=random.randint(1,2)
-                        if ra and not (ha and va):
-                            tg=2
-                        if ha and not (ra and va):
-                            tg=1
-                        if va and not (ra and ha):
-                            tg=3
+                    all_sprites.remove(lobo3)
 
-                        if va and ag==1:
-                            hp_v-=50/2
-                            turno=0
-                        else:
-                            if tg==1 and hit==0:
-                                hp_h-=50
-                                hit=1
-                                turno=0
-                            if tg==2 and hit==0:
-                                hp_r-=50
-                                hit=1
-                                turno=0
-                            if tg==3 and hit==0:
-                                hp_v-=50
-                                hit=1
-                                turno=0   
-        # Wave dos lagartos-----------------------------------------------------------------------------------------------------------------
+                if hp_l['lobo1']<=0  and hp_l['lobo2']<=0 and hp_l['lobo3']<=0 :
+                    wave = 2
 
-        if wave ==2:
-            if turno==3:
-                hit=0
+            # HP dos lagartos (WAVE 2)-----------------------------------------------------------------------------------------
+
+            if wave ==2:
+
+                all_sprites.add(lagarto1)
+                all_sprites.add(lagarto2)
+
+                HP_la1= font.render(f'HP {hp_la["lagarto1"]} / 1600' , True, (239, 3, 3 ))
+                HP_la2= font.render(f'HP {hp_la["lagarto2"]} / 1600' , True, (239, 3, 3 ))
+
                 if hp_la['lagarto1']<=0:
-                    turno=4
-                agora=pygame.time.get_ticks()
-                if agora-tempo_a>3000: 
-                    if hp_la['lagarto2']>0:
-                        if va and ra and ha:
-                            tg=random.randint(1, 3)
-                        if (va and ha) and not ra:
-                            tg=random.randint(1,3,2)
-                        if(va and ra) and not ha:
-                            tg=random.randint(2,3)
-                        if (ra and ha) and not va:
-                            tg=random.randint(1,2)
-                        if ra and not (ha and va):
-                            tg=2
-                        if ha and not (ra and va):
-                            tg=1
-                        if va and not (ra and ha):
-                            tg=3
+                    all_sprites.remove(lagarto1)
 
-                        if va and ag==1:
-                            hp_v-=225
-                            turno=4
-                            tempo_a=pygame.time.get_ticks()
-                        else:
-                        
-                            if tg==1 and hit==0:
-                                hp_h-=100
-                                hit=1
-                                turno=4
-                                tempo_a=pygame.time.get_ticks()
-                            if tg==2 and hit==0:
-                                hp_r-=100
-                                hit=1
-                                turno=4
-                                tempo_a=pygame.time.get_ticks()
-                            if tg==3 and hit==0:
-                                hp_v-=100
-                                hit=1
-                                turno=4
-                                tempo_a=pygame.time.get_ticks()
-
-            if turno==4:
-                hit=0
                 if hp_la['lagarto2']<=0:
-                    turno=0
-                agora=pygame.time.get_ticks()
-                if agora-tempo_a>3000: 
-                    if hp_la['lagarto2']>0:
-                            
-                        if va and ra and ha:
-                            tg=random.randint(1, 3)
-                        if (va and ha) and not ra:
-                            tg=random.randint(1,3,2)
-                        if(va and ra) and not ha:
-                            tg=random.randint(2,3)
-                        if (ra and ha) and not va:
-                            tg=random.randint(1,2)
-                        if ra and not (ha and va):
-                            tg=2
-                        if ha and not (ra and va):
-                            tg=1
-                        if va and not (ra and ha):
-                            tg=3
+                    all_sprites.remove(lagarto2)
 
-                        if va and ag==1:
-                            hp_v-=100/2
-                            turno=0
-                            tempo_a=pygame.time.get_ticks()
-                        
-                        else:
+                if hp_la['lagarto1']<=0 and hp_la['lagarto2']<=0:
+                    wave=3
 
-                            if tg==1 and hit==0:
-                                hp_h-=100
-                                hit=1
-                                turno=0
-                                tempo_a=pygame.time.get_ticks()
-                            if tg==2 and hit==0:
-                                hp_r-=100
-                                hit=1
-                                turno=0
-                                tempo_a=pygame.time.get_ticks()
-                            if tg==3 and hit==0:
-                                hp_v-=100
-                                hit=1
-                                turno=0   
-                                tempo_a=pygame.time.get_ticks()
+            # HP do elefante (BOSS WAVE 3)-----------------------------------------------------------------------------------------
 
-        # Wave do elefante boss------------------------------------------------------------------------------------------------------    
-        if wave == 3:
-            if turno==3:
-                hit=0
+            if wave ==3:
+
+                all_sprites.add(elefante)
+                
+                HP_e = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
+
+                if hp_e>0:
+                    window.blit(HP_e,(WIDTH-540, HEIGHT-640))
+
                 if hp_e<=0:
-                    turno=0
-                agora=pygame.time.get_ticks()
-                if agora-tempo_a>3000: 
-                    if hp_e>0:
-                        if va and ag==1:
-                            hp_v-=225
-                            turno=0
-                            tempo_a=pygame.time.get_ticks()
-                        else:
-                            ae=random.randint(1,2)
-                            if ae==1:
-                                hp_v-=100
-                                hp_r-=100
-                                hp_h-=100
-                                turno=0
+                    all_sprites.remove(elefante)
+                    
+
+
+
+            # Atualiza a acao de cada sprite------------------------------------------------------------------------------------
+            all_sprites.update()
+            
+            
+            window.blit(background, (0, 0))
+            all_sprites.draw(screen)
+
+            if ra:
+                window.blit(HP_r,(360, HEIGHT-460))
+            if va:
+                window.blit(HP_v,(110, HEIGHT-380))
+            if ha:
+                window.blit(HP_h,(130, HEIGHT-730))
+            
+            if wave==1:
+
+                if hp_l['lobo1']>0:
+                        window.blit(HP_l1,(WIDTH-400, HEIGHT-640))
+                
+                if hp_l['lobo2']>0:
+                        window.blit(HP_l2,(WIDTH-660, HEIGHT-520))
+
+                if hp_l['lobo3']>0:
+                        window.blit(HP_l3,(WIDTH-420, HEIGHT-310))
+
+            if wave ==2:
+                
+                if hp_la['lagarto1']>0:
+                        window.blit(HP_la1,(WIDTH-720, HEIGHT-610))
+
+                if hp_la['lagarto2']>0:
+                        window.blit(HP_la2,(WIDTH-720, HEIGHT-280))
+
+            if wave ==3:
+
+                if hp_e>0:
+                        window.blit(HP_e,(WIDTH-520, HEIGHT-620))
+
+            aviso_de_ataque=font.render('Selecione o ataque', True, (255, 240, 0))
+            selecao_de_alvo= font.render('Selecione o alvo', True, (255, 255, 255 ))
+
+            # Mecanica de combate do jogo-------------------------------------------------------------------------------------
+
+            #Turno da Hinoekaura----------------------------------------------------------------------------------------------
+
+            if turno==0:
+                
+                if not ha:
+                    turno=1
+
+                pygame.draw.polygon(window,cor,vertices1)
+                pygame.draw.polygon(window,cor,vertices2)
+
+                cura= font.render('Cura', True, (255, 255, 255 ))
+                magia= font.render('Explosão', True, (255, 255, 255 ))
+
+                window.blit(aviso_de_ataque, (WIDTH-930,HEIGHT-175 ))
+                window.blit(cura, (WIDTH-695,HEIGHT-95 ))
+                window.blit(magia, (WIDTH-980,HEIGHT-95))
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    cl=0
+
+                if wave==1:
+                    
+                    (x, y)= pygame.mouse.get_pos()
+
+                    if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
+                                hp_l['lobo1']-=75
+                                hp_l['lobo2']-=75
+                                hp_l['lobo3']-=75
+                                cl=1
+                                turno=1
+
+                    if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:
+
+                                if hp_r + 100 > 300:
+                                    hp_r=300
+                                else:
+                                    hp_r+=100
+                                
+                                if hp_h+100 > 225:
+                                    hp_h=225
+                                else:
+                                    hp_h+=100
+
+                                if hp_v+100>450:
+                                    hp_v=450
+                                else:
+                                    hp_v+=100
+                                cl=1
+                                turno=1
+
+                if wave==2:
+
+                    (x, y)= pygame.mouse.get_pos()
+                    if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
+                                hp_la['lagarto1']-=75
+                                hp_la['lagarto2']-=75
+                                cl=1
+                                turno=1
+
+                    if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                                if hp_r + 100 > 300:
+                                    hp_r=300
+                                else:
+                                    hp_r+=100
+                                
+                                if hp_h+100 > 225:
+                                    hp_h=225
+                                else:
+                                    hp_h+=100
+
+                                if hp_v+100>450:
+                                    hp_v=450
+                                else:
+                                    hp_v+=100
+                                cl=1
+                                turno=1
+                
+                if wave==3:
+                    (x, y)= pygame.mouse.get_pos()
+                    if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:                       
+                                hp_e-=75
+                                cl=1
+                                turno=1
+
+                    if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                                if hp_r + 100 > 300:
+                                    hp_r=300
+                                else:
+                                    hp_r+=100
+                                
+                                if hp_h+100 > 225:
+                                    hp_h=225
+                                else:
+                                    hp_h+=100
+
+                                if hp_v+100>450:
+                                    hp_v=450
+                                else:
+                                    hp_v+=100
+                                cl=1
+                                turno=1
+                                cl=1
+                                turno=1
+
+            # Turno do Ritsu---------------------------------------------------------------------------------------------------
+
+            if turno==1:
+
+                if not ra:
+                    turno=2
+
+                pygame.draw.polygon(window,cor,vertices1)
+                pygame.draw.polygon(window,cor,vertices2)
+
+
+                decapitar= font.render('Decapitar', True, (255, 255, 255 ))
+                corte= font.render('Corte', True, (255, 255, 255 ))
+
+
+                window.blit(aviso_de_ataque, (WIDTH-930,HEIGHT-175 ))
+                window.blit(decapitar, (WIDTH-720,HEIGHT-95 ))
+                window.blit(corte, (WIDTH-945,HEIGHT-95))
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    cl=0
+
+                if wave==1:
+                    
+                    (x, y)= pygame.mouse.get_pos()
+
+                    if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
+                                hp_l['lobo1']-=100
+                                hp_l['lobo2']-=100
+                                hp_l['lobo3']-=100
+                                cl=1
+                                turno=2
+
+
+                    if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                        deca=1
+                    
+                    if deca==1:
+                        window.blit(selecao_de_alvo, (WIDTH-930,HEIGHT-675 ))
+
+                    if (x >= WIDTH-400 and x<=WIDTH-180) and (y <= HEIGHT-330 and y>=HEIGHT-600) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_l['lobo1']-=225
+                            cl=1
+                            deca=0
+                            turno=2
+
+                    if (x >= WIDTH-660 and x<=WIDTH-450) and (y <= HEIGHT-230 and y>=HEIGHT-480) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_l['lobo2']-=225
+                            cl=1
+                            turno=2
+
+                    if (x >= WIDTH-420 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-280) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_l['lobo3']-=225
+                            cl=1
+                            turno=2
+
+                if wave==2:
+
+                    (x, y)= pygame.mouse.get_pos()
+                    if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
+                                hp_la['lagarto1']-=100
+                                hp_la['lagarto2']-=100
+                                cl=1
+                                turno=2
+
+                    if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                        deca=1
+                    
+                    if deca==1:
+                        window.blit(selecao_de_alvo, (WIDTH-930,HEIGHT-750 ))
+
+                    if (x >= WIDTH-530 and x<=WIDTH-220) and (y <= HEIGHT-330 and y>=HEIGHT-580) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_la['lagarto1']-=225
+                            cl=1
+                            deca=0
+                            turno=2
+
+                    if (x >= WIDTH-520 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-260) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_la['lagarto2']-=225
+                            cl=1
+                            turno=2
+
+                
+                if wave==3:
+                    (x, y)= pygame.mouse.get_pos()
+                    if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
+                                hp_e-=100
+                                cl=1
+                                turno=2
+
+                    if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                                hp_e-=225
+                                cl=1
+                                deca=0
+                                turno=2
+
+            # Turno da Veronica----------------------------------------------------------------------------------------------------------------
+            if turno==2:
+                if not va:
+                    turno=3
+
+                pygame.draw.polygon(window,cor,vertices1)
+                pygame.draw.polygon(window,cor,vertices2)
+
+
+                uppercut= font.render('Uppercut', True, (255, 255, 255 ))
+                aggro= font.render('Aggro', True, (255, 255, 255 ))
+
+
+                window.blit(aviso_de_ataque, (WIDTH-930,HEIGHT-175 ))
+                window.blit(uppercut, (WIDTH-720,HEIGHT-95 ))
+                window.blit(aggro, (WIDTH-955,HEIGHT-95))
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    cl=0
+
+                if wave==1:
+                    
+                    (x, y)= pygame.mouse.get_pos()
+
+                    if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
+                                ag=1
+                                cl=1
+                                turno=3
                                 tempo_a=pygame.time.get_ticks()
 
-                            if ae==2:
-                                if va and ra and ha:
-                                    tg=random.randint(1, 3)
-                                if (va and ha) and not ra:
-                                    tg=random.randint(1,3,2)
-                                if(va and ra) and not ha:
-                                    tg=random.randint(2,3)
-                                if (ra and ha) and not va:
-                                    tg=random.randint(1,2)
-                                if ra and not (ha and va):
-                                    tg=2
-                                if ha and not (ra and va):
-                                    tg=1
-                                if va and not (ra and ha):
-                                    tg=3
+
+                    if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                        deca=1
+                        ag=0
+                    
+                    if deca==1:
+                        window.blit(selecao_de_alvo, (WIDTH-930,HEIGHT-675 ))
+
+                    if (x >= WIDTH-400 and x<=WIDTH-180) and (y <= HEIGHT-330 and y>=HEIGHT-600) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_l['lobo1']-=175
+                            cl=1
+                            deca=0
+                            turno=3
+                            tempo_a=pygame.time.get_ticks()
+
+                    if (x >= WIDTH-660 and x<=WIDTH-450) and (y <= HEIGHT-230 and y>=HEIGHT-480) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_l['lobo2']-=175
+                            cl=1
+                            turno=3
+                            tempo_a=pygame.time.get_ticks()
+
+                    if (x >= WIDTH-420 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-280) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_l['lobo3']-=175
+                            cl=1
+                            turno=3
+                            tempo_a=pygame.time.get_ticks()
+
+                if wave==2:
+
+                    (x, y)= pygame.mouse.get_pos()
+                    if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
+                                ag=1
+                                cl=1
+                                turno=3
+                                tempo_a=pygame.time.get_ticks()
+
+                    if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                        deca=1
+                        ag=0
+                    
+                    if deca==1:
+                        window.blit(selecao_de_alvo, (WIDTH-930,HEIGHT-750 ))
+
+                    if (x >= WIDTH-530 and x<=WIDTH-220) and (y <= HEIGHT-330 and y>=HEIGHT-580) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_la['lagarto1']-=175
+                            cl=1
+                            deca=0
+                            turno=3
+                            tempo_a=pygame.time.get_ticks()
+
+                    if (x >= WIDTH-520 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-260) and deca==1:
+                        if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                            hp_la['lagarto2']-=175
+                            cl=1
+                            turno=3
+                            tempo_a=pygame.time.get_ticks()
+
+                
+                if wave==3:
+                    (x, y)= pygame.mouse.get_pos()
+                    if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
+                                ag=1
+                                cl=1
+                                turno=3
+                                tempo_a=pygame.time.get_ticks()
+
+                    if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
+                            if event.type == pygame.MOUSEBUTTONUP and cl==0:
+                                ag=0
+                                hp_e-=175
+                                cl=1
+                                deca=0
+                                turno=3
+                                tempo_a=pygame.time.get_ticks()
+
+            # Turno dos inimigos-------------------------------------------------------------------------------------------------------
+            # Wave dos lobos--------------------------------------------------------------------------------------------------
+            if wave ==1:
+                if turno==3:
+                    hit=0
+                    if hp_l['lobo1']<=0:
+                        turno=4
+                    agora=pygame.time.get_ticks()
+                    if agora-tempo_a>3000: 
+                        if hp_l['lobo1']>0:
+                            if va and ra and ha:
+                                tg=random.randint(1, 3)
+                            if (va and ha) and not ra:
+                                tg=random.randint(1,3,2)
+                            if(va and ra) and not ha:
+                                tg=random.randint(2,3)
+                            if (ra and ha) and not va:
+                                tg=random.randint(1,2)
+                            if ra and not (ha and va):
+                                tg=2
+                            if ha and not (ra and va):
+                                tg=1
+                            if va and not (ra and ha):
+                                tg=3
+
+                            if va and ag==1:
+                                hp_v-=50
+                                turno=4
+                                tempo_a=pygame.time.get_ticks()
+                            else:
+                                if tg==1 and hit==0:
+                                    hp_h-=50
+                                    hit=1
+                                    turno=4
+                                    tempo_a=pygame.time.get_ticks()
+                                if tg==2 and hit==0:
+                                    hp_r-=50
+                                    hit=1
+                                    turno=4
+                                    tempo_a=pygame.time.get_ticks()
+                                if tg==3 and hit==0:
+                                    hp_v-=50
+                                    hit=1
+                                    turno=4
+                                    tempo_a=pygame.time.get_ticks()
+
+                if turno==4:
+                    hit=0
+                    if hp_l['lobo2']<=0:
+                        turno=5
+                    agora=pygame.time.get_ticks()
+                    if agora-tempo_a>3000: 
+                        if hp_l['lobo2']>0:
+                                
+                            if va and ra and ha:
+                                tg=random.randint(1, 3)
+                            if (va and ha) and not ra:
+                                tg=random.randint(1,3,2)
+                            if(va and ra) and not ha:
+                                tg=random.randint(2,3)
+                            if (ra and ha) and not va:
+                                tg=random.randint(1,2)
+                            if ra and not (ha and va):
+                                tg=2
+                            if ha and not (ra and va):
+                                tg=1
+                            if va and not (ra and ha):
+                                tg=3
+
+                            if va and ag==1:
+                                hp_v-=50
+                                turno=5
+                                tempo_a=pygame.time.get_ticks()
+                            else:
+                                if tg==1 and hit==0:
+                                    hp_h-=50
+                                    hit=1
+                                    turno=5
+                                    tempo_a=pygame.time.get_ticks()
+                                if tg==2 and hit==0:
+                                    hp_r-=50
+                                    hit=1
+                                    turno=5
+                                    tempo_a=pygame.time.get_ticks()
+                                if tg==3 and hit==0:
+                                    hp_v-=50
+                                    hit=1
+                                    turno=5   
+                                    tempo_a=pygame.time.get_ticks()
+                        
+                if turno==5:
+                    hit=0
+                    if hp_l['lobo3']<=0:
+                        turno=0
+                    agora=pygame.time.get_ticks()
+                    if agora-tempo_a>3000: 
+                        if hp_l['lobo3']>0:
+                                
+                            if va and ra and ha:
+                                tg=random.randint(1, 3)
+                            if (va and ha) and not ra:
+                                tg=random.randint(1,3,2)
+                            if(va and ra) and not ha:
+                                tg=random.randint(2,3)
+                            if (ra and ha) and not va:
+                                tg=random.randint(1,2)
+                            if ra and not (ha and va):
+                                tg=2
+                            if ha and not (ra and va):
+                                tg=1
+                            if va and not (ra and ha):
+                                tg=3
+
+                            if va and ag==1:
+                                hp_v-=50
+                                turno=0
+                            else:
+                                if tg==1 and hit==0:
+                                    hp_h-=50
+                                    hit=1
+                                    turno=0
+                                if tg==2 and hit==0:
+                                    hp_r-=50
+                                    hit=1
+                                    turno=0
+                                if tg==3 and hit==0:
+                                    hp_v-=50
+                                    hit=1
+                                    turno=0   
+            # Wave dos lagartos-----------------------------------------------------------------------------------------------------------------
+
+            if wave ==2:
+                if turno==3:
+                    hit=0
+                    if hp_la['lagarto1']<=0:
+                        turno=4
+                    agora=pygame.time.get_ticks()
+                    if agora-tempo_a>3000: 
+                        if hp_la['lagarto2']>0:
+                            if va and ra and ha:
+                                tg=random.randint(1, 3)
+                            if (va and ha) and not ra:
+                                tg=random.randint(1,3,2)
+                            if(va and ra) and not ha:
+                                tg=random.randint(2,3)
+                            if (ra and ha) and not va:
+                                tg=random.randint(1,2)
+                            if ra and not (ha and va):
+                                tg=2
+                            if ha and not (ra and va):
+                                tg=1
+                            if va and not (ra and ha):
+                                tg=3
+
+                            if va and ag==1:
+                                hp_v-=175
+                                turno=4
+                                tempo_a=pygame.time.get_ticks()
+                            else:
+                            
+                                if tg==1 and hit==0:
+                                    hp_h-=100
+                                    hit=1
+                                    turno=4
+                                    tempo_a=pygame.time.get_ticks()
+                                if tg==2 and hit==0:
+                                    hp_r-=100
+                                    hit=1
+                                    turno=4
+                                    tempo_a=pygame.time.get_ticks()
+                                if tg==3 and hit==0:
+                                    hp_v-=100
+                                    hit=1
+                                    turno=4
+                                    tempo_a=pygame.time.get_ticks()
+
+                if turno==4:
+                    hit=0
+                    if hp_la['lagarto2']<=0:
+                        turno=0
+                    agora=pygame.time.get_ticks()
+                    if agora-tempo_a>3000: 
+                        if hp_la['lagarto2']>0:
+                                
+                            if va and ra and ha:
+                                tg=random.randint(1, 3)
+                            if (va and ha) and not ra:
+                                tg=random.randint(1,3,2)
+                            if(va and ra) and not ha:
+                                tg=random.randint(2,3)
+                            if (ra and ha) and not va:
+                                tg=random.randint(1,2)
+                            if ra and not (ha and va):
+                                tg=2
+                            if ha and not (ra and va):
+                                tg=1
+                            if va and not (ra and ha):
+                                tg=3
+
+                            if va and ag==1:
+                                hp_v-=100/2
+                                turno=0
+                                tempo_a=pygame.time.get_ticks()
+                            
+                            else:
 
                                 if tg==1 and hit==0:
-                                    hp_h-=175
+                                    hp_h-=100
                                     hit=1
                                     turno=0
                                     tempo_a=pygame.time.get_ticks()
                                 if tg==2 and hit==0:
-                                    hp_r-=175
+                                    hp_r-=100
                                     hit=1
                                     turno=0
                                     tempo_a=pygame.time.get_ticks()
                                 if tg==3 and hit==0:
-                                    hp_v-=175
+                                    hp_v-=100
                                     hit=1
                                     turno=0   
                                     tempo_a=pygame.time.get_ticks()
+
+            # Wave do elefante boss------------------------------------------------------------------------------------------------------    
+            if wave == 3:
+                if turno==3:
+                    hit=0
+                    if hp_e<=0:
+                        turno=0
+                    agora=pygame.time.get_ticks()
+                    if agora-tempo_a>3000: 
+                        if hp_e>0:
+                            if va and ag==1:
+                                hp_v-=225
+                                turno=0
+                                tempo_a=pygame.time.get_ticks()
+                            else:
+                                ae=random.randint(1,2)
+                                if ae==1:
+                                    hp_v-=100
+                                    hp_r-=100
+                                    hp_h-=100
+                                    turno=0
+                                    tempo_a=pygame.time.get_ticks()
+
+                                if ae==2:
+                                    if va and ra and ha:
+                                        tg=random.randint(1, 3)
+                                    if (va and ha) and not ra:
+                                        tg=random.randint(1,3,2)
+                                    if(va and ra) and not ha:
+                                        tg=random.randint(2,3)
+                                    if (ra and ha) and not va:
+                                        tg=random.randint(1,2)
+                                    if ra and not (ha and va):
+                                        tg=2
+                                    if ha and not (ra and va):
+                                        tg=1
+                                    if va and not (ra and ha):
+                                        tg=3
+
+                                    if tg==1 and hit==0:
+                                        hp_h-=175
+                                        hit=1
+                                        turno=0
+                                        tempo_a=pygame.time.get_ticks()
+                                    if tg==2 and hit==0:
+                                        hp_r-=175
+                                        hit=1
+                                        turno=0
+                                        tempo_a=pygame.time.get_ticks()
+                                    if tg==3 and hit==0:
+                                        hp_v-=175
+                                        hit=1
+                                        turno=0   
+                                        tempo_a=pygame.time.get_ticks()
+
+        if state==end:
+            background_end = pygame.transform.scale(gameover, (WIDTH, HEIGHT))
+            window.blit(background_end, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(5000)
+            break
 
         pygame.display.flip()
 
