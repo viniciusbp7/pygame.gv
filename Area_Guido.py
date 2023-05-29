@@ -468,11 +468,10 @@ def game_screen(screen):
         dano=1
         if state==init:
             window.blit(start,(WIDTH-540, HEIGHT-640))
-            call=font.render(f'Press space!', True, (255, 255, 255 ))
+            call=font.render(f'Pressiona setas!', True, (255, 255, 255 ))
             call = pygame.transform.scale(call, (600, 150))
             window.blit(call,(WIDTH-540, HEIGHT-640))
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+        if event.type == pygame.KEYDOWN:
                 state = PLAYING
         if state==PLAYING:
             if wave==1:
