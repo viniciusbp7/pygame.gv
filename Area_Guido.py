@@ -18,6 +18,7 @@ WIDTH = window.get_width()
 HEIGHT = window.get_height()
 FPS = 60 # Frames por segundo
 background = pygame.image.load('imagens/base.webp')
+gameover=pygame.image.load('imagens/GAMEOVER.png')
 start=pygame.image.load("imagens/Start!.png")
 hinoekagura= pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
 pygame.display.set_caption('Hello World!')
@@ -439,7 +440,7 @@ def game_screen(screen):
     PLAYING = 0
     DONE = 1
     init = 2 
-    
+    end=3
     hp_r=(300)
     hp_v=(450)
     hp_h=(150)
@@ -515,7 +516,12 @@ def game_screen(screen):
                 if hp_e<=0:
                     all_sprites.remove(elefante)
                     
-
+        if state==end:
+            background_end = pygame.transform.scale(gameover, (WIDTH, HEIGHT))
+            window.blit(background_end, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(5000)
+            break
         # Atualiza a acao de cada sprite------------------------------------------------------------------------------------
         all_sprites.update()
             
