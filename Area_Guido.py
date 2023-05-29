@@ -18,6 +18,7 @@ WIDTH = window.get_width()
 HEIGHT = window.get_height()
 FPS = 60 # Frames por segundo
 background = pygame.image.load('imagens/base.webp')
+start=pygame.image.load("imagens/Start!.png")
 hinoekagura= pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
 pygame.display.set_caption('Hello World!')
 
@@ -437,7 +438,8 @@ def game_screen(screen):
 
     PLAYING = 0
     DONE = 1
-
+    init = 2 
+    
     hp_r=(300)
     hp_v=(450)
     hp_h=(150)
@@ -445,9 +447,8 @@ def game_screen(screen):
     hp_la=(800)
     hp_e=(3000)
     pygame.mixer.music.play(loops=-1)
-    state = PLAYING
+    state = init
     while state != DONE:
-
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -465,59 +466,71 @@ def game_screen(screen):
 
         wave=1
         dano=1
-        if wave==1:
+        if state==init:
+            window.blit(start,(WIDTH-540, HEIGHT-640))
+            call=font.render(f'Press space!', True, (255, 255, 255 ))
+            call = pygame.transform.scale(call, (600, 150))
+            window.blit(call,(WIDTH-540, HEIGHT-640))
+            if event.type.key == pygame.KEYDOWN:
+                    state=PLAYING
+        if state==PLAYING:
+            if wave==1:
 
-            all_sprites.add(lobo)
+                all_sprites.add(lobo)
 
-            # HP dos lobos (WAVE 1)---------------------------------------------------------------------------------------------
+                # HP dos lobos (WAVE 1)---------------------------------------------------------------------------------------------
+
+                
+
+                HP_ene= font.render(f'HP {hp_l["lobo1"]} / 300', True, (239, 3, 3 ))
+                #HP_l2= font.render(f'HP {hp_l["lobo2"]} / 300', True, (239, 3, 3 ))
+                #HP_l3= font.render(f'HP {hp_l["lobo3"]} / 300', True, (239, 3, 3 ))
+
+                hp_l["lobo1"]-=1
+                
 
             
-
-            HP_ene= font.render(f'HP {hp_l["lobo1"]} / 300', True, (239, 3, 3 ))
-            #HP_l2= font.render(f'HP {hp_l["lobo2"]} / 300', True, (239, 3, 3 ))
-            #HP_l3= font.render(f'HP {hp_l["lobo3"]} / 300', True, (239, 3, 3 ))
-
-            hp_l["lobo1"]-=1
-            
-
-        
-            window.blit(HP_ene,(WIDTH-540, HEIGHT-640))
-
-            if hp_l['lobo1']<=0:
-                all_sprites.remove(lobo)
-                wave = 2
-
-        # HP dos lagartos (WAVE 2)-----------------------------------------------------------------------------------------
-
-        HP_la1= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
-        HP_la2= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
-
-        # HP do elefante (BOSS WAVE 3)-----------------------------------------------------------------------------------------
-        if wave ==2:
-            all_sprites.add(elefante)
-            
-            HP_ene = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
-
-            hp_e-=1
-
-            if hp_e>0:
                 window.blit(HP_ene,(WIDTH-540, HEIGHT-640))
 
-            if hp_e<=0:
-                all_sprites.remove(elefante)
+                if hp_l['lobo1']<=0:
+                    all_sprites.remove(lobo)
+                    wave = 2
+
+            # HP dos lagartos (WAVE 2)-----------------------------------------------------------------------------------------
+
+            HP_la1= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
+            HP_la2= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
+
+            # HP do elefante (BOSS WAVE 3)-----------------------------------------------------------------------------------------
+            if wave ==2:
+                all_sprites.add(elefante)
                 
+                HP_ene = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
+
+                hp_e-=1
+
+                if hp_e>0:
+                    window.blit(HP_ene,(WIDTH-540, HEIGHT-640))
+
+                if hp_e<=0:
+                    all_sprites.remove(elefante)
+                    
 
         # Atualiza a acao de cada sprite------------------------------------------------------------------------------------
         all_sprites.update()
-        
-        
+            
+            
         window.blit(background, (0, 0))
-        all_sprites.draw(screen)
-
-        window.blit(HP_r,(360, HEIGHT-460))
-        window.blit(HP_v,(110, HEIGHT-380))
-        window.blit(HP_h,(130, HEIGHT-730))
-        window.blit(HP_ene,(WIDTH-540, HEIGHT-640))
+        
+        if state==init:
+            window.blit(start,(WIDTH-1555, HEIGHT-850))
+            window.blit(call,(WIDTH-1050, HEIGHT-200))
+        if state==PLAYING:
+            all_sprites.draw(screen)
+            window.blit(HP_r,(360, HEIGHT-460))
+            window.blit(HP_v,(110, HEIGHT-380))
+            window.blit(HP_h,(130, HEIGHT-730))
+            window.blit(HP_ene,(WIDTH-540, HEIGHT-640))
 
         pygame.display.flip()
 
