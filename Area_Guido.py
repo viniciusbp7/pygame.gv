@@ -18,6 +18,7 @@ WIDTH = window.get_width()
 HEIGHT = window.get_height()
 FPS = 60 # Frames por segundo
 background = pygame.image.load('imagens/base.webp')
+Win_stat=pygame.image.load('imagens/WIN.webp')
 gameover=pygame.image.load('imagens/GAMEOVER.png')
 start=pygame.image.load("imagens/Start!.png")
 hinoekagura= pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
@@ -441,6 +442,7 @@ def game_screen(screen):
     DONE = 1
     init = 2 
     end=3
+    vit=4
     hp_r=(300)
     hp_v=(450)
     hp_h=(150)
@@ -448,7 +450,7 @@ def game_screen(screen):
     hp_la=(800)
     hp_e=(3000)
     pygame.mixer.music.play(loops=-1)
-    state = init
+    state = vit
     while state != DONE:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -519,6 +521,12 @@ def game_screen(screen):
         if state==end:
             background_end = pygame.transform.scale(gameover, (WIDTH, HEIGHT))
             window.blit(background_end, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(5000)
+            break
+        if state==vit:
+            background_vit = pygame.transform.scale(Win_stat, (WIDTH, HEIGHT))
+            window.blit(background_vit, (0, 0))
             pygame.display.flip()
             pygame.time.delay(5000)
             break
