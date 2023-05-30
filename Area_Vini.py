@@ -1436,10 +1436,10 @@ def game_screen(screen):
 
         if state==init:
             window.blit(start,(WIDTH-1550, HEIGHT-850))
-            call=font.render(f'Pressione as setas!', True, (255, 255, 255 ))
+            call=font.render(f'Pressione o mouse!', True, (255, 255, 255 ))
             call = pygame.transform.scale(call, (600, 150))
             window.blit(call,(WIDTH-740, HEIGHT-140))
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.MOUSEBUTTONUP:
                 state = PLAYING
 
         if state==PLAYING:
@@ -1599,29 +1599,29 @@ def game_screen(screen):
 
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                                hp_l['lobo1']-=75
-                                hp_l['lobo2']-=75
-                                hp_l['lobo3']-=75
+                                hp_l['lobo1']-=100
+                                hp_l['lobo2']-=100
+                                hp_l['lobo3']-=100
                                 cl=1
                                 cont=1
 
                     if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
 
-                                if hp_r + 100 > 300:
+                                if hp_r + 125 > 300:
                                     hp_r=300
                                 else:
-                                    hp_r+=100
+                                    hp_r+=125
                                 
-                                if hp_h+100 > 225:
+                                if hp_h+125 > 225:
                                     hp_h=225
                                 else:
-                                    hp_h+=100
+                                    hp_h+=125
 
-                                if hp_v+100>450:
+                                if hp_v+125>450:
                                     hp_v=450
                                 else:
-                                    hp_v+=100
+                                    hp_v+=125
                                 cl=1
                                 cont=1
             
@@ -1630,27 +1630,27 @@ def game_screen(screen):
                     (x, y)= pygame.mouse.get_pos()
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                                hp_la['lagarto1']-=75
-                                hp_la['lagarto2']-=75
+                                hp_la['lagarto1']-=100
+                                hp_la['lagarto2']-=100
                                 cl=1
                                 cont=1
                                 
                     if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                                if hp_r + 100 > 300:
+                                if hp_r + 125 > 300:
                                     hp_r=300
                                 else:
-                                    hp_r+=100
+                                    hp_r+=125
                                 
-                                if hp_h+100 > 225:
+                                if hp_h+125 > 225:
                                     hp_h=225
                                 else:
-                                    hp_h+=100
+                                    hp_h+=125
 
-                                if hp_v+100>450:
+                                if hp_v+125>450:
                                     hp_v=450
                                 else:
-                                    hp_v+=100
+                                    hp_v+=125
                                 cl=1
                                 cont=1
                                 
@@ -1658,26 +1658,26 @@ def game_screen(screen):
                     (x, y)= pygame.mouse.get_pos()
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                       
-                                hp_e-=75
+                                hp_e-=100
                                 cl=1
                                 cont=1
 
                     if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                                if hp_r + 100 > 300:
+                                if hp_r + 125 > 300:
                                     hp_r=300
                                 else:
-                                    hp_r+=100
+                                    hp_r+=125
                                 
-                                if hp_h+100 > 225:
+                                if hp_h+125 > 225:
                                     hp_h=225
                                 else:
-                                    hp_h+=100
+                                    hp_h+=125
 
-                                if hp_v+100>450:
+                                if hp_v+125>450:
                                     hp_v=450
                                 else:
-                                    hp_v+=100
+                                    hp_v+=125
                                 cl=1
                                 cont=1
 
@@ -1725,9 +1725,9 @@ def game_screen(screen):
 
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                                hp_l['lobo1']-=100
-                                hp_l['lobo2']-=100
-                                hp_l['lobo3']-=100
+                                hp_l['lobo1']-=150
+                                hp_l['lobo2']-=150
+                                hp_l['lobo3']-=150
                                 cl=1
                                 cont=2
 
@@ -1740,20 +1740,20 @@ def game_screen(screen):
 
                     if (x >= WIDTH-400 and x<=WIDTH-180) and (y <= HEIGHT-330 and y>=HEIGHT-600) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_l['lobo1']-=225
+                            hp_l['lobo1']-=250
                             cl=1
                             deca=0
                             cont=2
 
                     if (x >= WIDTH-660 and x<=WIDTH-450) and (y <= HEIGHT-230 and y>=HEIGHT-480) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_l['lobo2']-=225
+                            hp_l['lobo2']-=250
                             cl=1
                             cont=2
 
                     if (x >= WIDTH-420 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-280) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_l['lobo3']-=225
+                            hp_l['lobo3']-=250
                             cl=1
                             cont=2
 
@@ -1762,8 +1762,8 @@ def game_screen(screen):
                     (x, y)= pygame.mouse.get_pos()
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                                hp_la['lagarto1']-=100
-                                hp_la['lagarto2']-=100
+                                hp_la['lagarto1']-=150
+                                hp_la['lagarto2']-=150
                                 cl=1
                                 cont=2
 
@@ -1775,14 +1775,14 @@ def game_screen(screen):
 
                     if (x >= WIDTH-530 and x<=WIDTH-220) and (y <= HEIGHT-330 and y>=HEIGHT-580) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_la['lagarto1']-=225
+                            hp_la['lagarto1']-=250
                             cl=1
                             deca=0
                             cont=2
 
                     if (x >= WIDTH-520 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-260) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_la['lagarto2']-=225
+                            hp_la['lagarto2']-=250
                             cl=1
                             cont=2
 
@@ -1791,13 +1791,13 @@ def game_screen(screen):
                     (x, y)= pygame.mouse.get_pos()
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                                hp_e-=100
+                                hp_e-=150
                                 cl=1
                                 cont=2
 
                     if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                                hp_e-=225
+                                hp_e-=250
                                 cl=1
                                 deca=0
                                 cont=2
@@ -1970,23 +1970,23 @@ def game_screen(screen):
                             tg=3
 
                         if va and ag==1 and hit==0:
-                            hp_v-=50
+                            hp_v-=75
                             hit=1
                             cont=4
                                 
                         else:
                             if tg==1 and hit==0:
-                                hp_h-=50
+                                hp_h-=75
                                 hit=1
                                 cont=4
 
                             if tg==2 and hit==0:
-                                hp_r-=50
+                                hp_r-=75
                                 hit=1
                                 cont=4
 
                             if tg==3 and hit==0:
-                                hp_v-=50
+                                hp_v-=75
                                 hit=1
                                 cont=4
 
@@ -2029,23 +2029,23 @@ def game_screen(screen):
                             tg=3
 
                         if va and ag==1 and hit==1:
-                            hp_v-=50
+                            hp_v-=75
                             hit=2
                             cont=5
 
                         else:
                             if tg==1 and hit==1:
-                                hp_h-=50
+                                hp_h-=75
                                 hit=2
                                 cont=5
 
                             if tg==2 and hit==1:
-                                hp_r-=50
+                                hp_r-=75
                                 hit=2
                                 cont=5
 
                             if tg==3 and hit==1:
-                                hp_v-=50
+                                hp_v-=75
                                 hit=2
                                 cont=5   
 
@@ -2090,23 +2090,23 @@ def game_screen(screen):
                             tg=3
 
                         if va and ag==1 and hit==2:
-                            hp_v-=50
+                            hp_v-=75
                             hit=0
                             cont=6
 
                         else:
                             if tg==1 and hit==2:
-                                hp_h-=50
+                                hp_h-=75
                                 hit=0
                                 cont=6
 
                             if tg==2 and hit==2:
-                                hp_r-=50
+                                hp_r-=75
                                 hit=0
                                 cont=6
 
                             if tg==3 and hit==2:
-                                hp_v-=50
+                                hp_v-=75
                                 hit=0
                                 cont=6
 
@@ -2131,7 +2131,7 @@ def game_screen(screen):
             if wave ==2:
                 if turno==3:
                     if hp_la['lagarto1']<=0:
-                        ani=3 
+                        ani=4 
                         hit=1
                         turno=4
 
@@ -2152,24 +2152,24 @@ def game_screen(screen):
                             tg=3
 
                         if va and ag==1 and hit==0:
-                            hp_v-=100
+                            hp_v-=125
                             hit=1
                             cont=4
 
                         else:
                             
                             if tg==1 and hit==0:
-                                hp_h-=100
+                                hp_h-=125
                                 hit=1
                                 cont=4
 
                             if tg==2 and hit==0:
-                                hp_r-=100
+                                hp_r-=125
                                 hit=1
                                 cont=4
 
                             if tg==3 and hit==0:
-                                hp_v-=100
+                                hp_v-=125
                                 hit=1
                                 cont=4
 
@@ -2213,23 +2213,23 @@ def game_screen(screen):
                         if va and not (ra and ha):
                             tg=3
                         if va and ag==1 and hit==1:
-                            hp_v-=100
+                            hp_v-=125
                             hit=0
                             cont=5
                         
                         else:
                             if tg==1 and hit==1:
-                                hp_h-=100
+                                hp_h-=125
                                 hit=0
                                 cont=5
 
                             if tg==2 and hit==1:
-                                hp_r-=100
+                                hp_r-=125
                                 hit=0
                                 cont=5
 
                             if tg==3 and hit==1:
-                                hp_v-=100
+                                hp_v-=125
                                 hit=0
                                 cont=5   
 
@@ -2262,15 +2262,15 @@ def game_screen(screen):
                             cont=4
 
                         else:
-                            ae=random.randint(1,2)
+                            ae=random.randint(1,3)
                             if ae==1 and hit==0:
-                                hp_v-=100
-                                hp_r-=100
-                                hp_h-=100
+                                hp_v-=150
+                                hp_r-=150
+                                hp_h-=150
                                 hit=1
                                 cont=4
 
-                            if ae==2:
+                            if ae==2 or ae==3:
                                 if va and ra and ha:
                                     tg=random.randint(1, 3)
                                 if (va and ha) and not ra:
@@ -2349,4 +2349,4 @@ print('*' * len(TITULO))
 try:
     game_screen(screen)
 finally:
-    pygame.quit()   
+    pygame.quit()
