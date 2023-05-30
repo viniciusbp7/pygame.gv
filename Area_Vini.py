@@ -1394,7 +1394,7 @@ def game_screen(screen):
     vit=4
 
     hp_r=(300)
-    hp_v=(4500000000000000000)
+    hp_v=(450)
     hp_h=(225)
     hp_l={'lobo1':700, 'lobo2':700, 'lobo3':700}
     hp_la={'lagarto1':1600, 'lagarto2':1600}
