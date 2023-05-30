@@ -1102,6 +1102,218 @@ class Lobo3_Ani(pygame.sprite.Sprite):
             self.rect.centerx = WIDTH-300
             self.rect.centery = HEIGHT-145
 
+# Animação dos lagartos--------------------------------------------------------------------------------------------------------
+
+class Lagarto1_Ani(pygame.sprite.Sprite):
+    
+    # Construtor da classe. O argumento player_sheet é uma imagem contendo um spritesheet.
+    def __init__(self, lagarto_sheet):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
+        lagarto_sheet = pygame.transform.scale(lagarto_sheet, (1460, 330))
+
+        # Define sequências de sprites de cada animação
+        spritesheet_La = load_spritesheet(lagarto_sheet, 1, 4)
+        self.animations = {
+            STILL: spritesheet_La[0:4]
+        }
+        # Define estado atual (que define qual animação deve ser mostrada)
+        self.state = STILL
+        # Define animação atual
+        self.animation = self.animations[self.state]
+        # Inicializa o primeiro quadro da animação
+        self.frame = 0
+        self.image = self.animation[self.frame]
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        self.rect.centerx = WIDTH-400
+        self.rect.centery = HEIGHT-525
+
+
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 140
+
+    def update(self):
+        # Verifica o tick atual.
+        now = pygame.time.get_ticks()
+
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.frame += 1
+
+            # Atualiza animação atual
+            self.animation = self.animations[self.state]
+            # Reinicia a animação caso o índice da imagem atual seja inválido
+            if self.frame >= len(self.animation):
+                self.frame = 0
+            
+            # Armazena a posição do centro da imagem
+            center = self.rect.center
+            # Atualiza imagem atual
+            self.image = self.animation[self.frame]
+            # Atualiza os detalhes de posicionamento
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+
+            self.rect.centerx = WIDTH-400
+            self.rect.centery = HEIGHT-525
+
+class Lagarto2_Ani(pygame.sprite.Sprite):
+    
+    # Construtor da classe. O argumento player_sheet é uma imagem contendo um spritesheet.
+    def __init__(self, lagarto_sheet):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
+        lagarto_sheet = pygame.transform.scale(lagarto_sheet, (1460, 330))
+
+        # Define sequências de sprites de cada animação
+        spritesheet_La = load_spritesheet(lagarto_sheet, 1, 4)
+        self.animations = {
+            STILL: spritesheet_La[0:4]
+        }
+        # Define estado atual (que define qual animação deve ser mostrada)
+        self.state = STILL
+        # Define animação atual
+        self.animation = self.animations[self.state]
+        # Inicializa o primeiro quadro da animação
+        self.frame = 0
+        self.image = self.animation[self.frame]
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        self.rect.centerx = WIDTH-400
+        self.rect.centery = HEIGHT-195
+
+
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 140
+
+    def update(self):
+        # Verifica o tick atual.
+        now = pygame.time.get_ticks()
+
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.frame += 1
+
+            # Atualiza animação atual
+            self.animation = self.animations[self.state]
+            # Reinicia a animação caso o índice da imagem atual seja inválido
+            if self.frame >= len(self.animation):
+                self.frame = 0
+            
+            # Armazena a posição do centro da imagem
+            center = self.rect.center
+            # Atualiza imagem atual
+            self.image = self.animation[self.frame]
+            # Atualiza os detalhes de posicionamento
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+
+            self.rect.centerx = WIDTH-400
+            self.rect.centery = HEIGHT-195
+
+# Animação do elefante-------------------------------------------------------------------------------------------------------
+
+class Elefante_Ani(pygame.sprite.Sprite):
+    
+    # Construtor da classe. O argumento player_sheet é uma imagem contendo um spritesheet.
+    def __init__(self, elefante_sheet):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
+        elefante_sheet = pygame.transform.scale(elefante_sheet, (2360, 900))
+
+        # Define sequências de sprites de cada animação
+        spritesheet_E = load_spritesheet(elefante_sheet, 1, 4)
+        self.animations = {
+            STILL: spritesheet_E[0:4]
+        }
+        # Define estado atual (que define qual animação deve ser mostrada)
+        self.state = STILL
+        # Define animação atual
+        self.animation = self.animations[self.state]
+        # Inicializa o primeiro quadro da animação
+        self.frame = 0
+        self.image = self.animation[self.frame]
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        self.rect.centerx = WIDTH-400
+        self.rect.centery = HEIGHT-565
+
+
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 260
+
+    def update(self):
+        # Verifica o tick atual.
+        now = pygame.time.get_ticks()
+
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.frame += 1
+
+            # Atualiza animação atual
+            self.animation = self.animations[self.state]
+            # Reinicia a animação caso o índice da imagem atual seja inválido
+            if self.frame >= len(self.animation):
+                self.frame = 0
+            
+            # Armazena a posição do centro da imagem
+            center = self.rect.center
+            # Atualiza imagem atual
+            self.image = self.animation[self.frame]
+            # Atualiza os detalhes de posicionamento
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+
+            self.rect.centerx = WIDTH-400
+            self.rect.centery = HEIGHT-565
+
+
 # Define situações inicias do jogo------------------------------------------------------------------------------------------
 
 def game_screen(screen):
@@ -1125,6 +1337,8 @@ def game_screen(screen):
     ritsu_sheet_ani = pygame.image.load(path.join(img_dir, "Ritsu/General_Ritsu_spritesheet_ataque.png")).convert_alpha()
     veronica_sheet_ani = pygame.image.load(path.join(img_dir, 'Veronica/Veronica_spritesheet_ataque.png')).convert_alpha()
     lobo_ani= pygame.image.load(path.join(img_dir, "Mobs/Lobo_spritesheet_ataque.png")).convert_alpha()
+    lagarto_ani= pygame.image.load(path.join(img_dir, "Mobs/Lagarto_spritesheet_ataque.png")).convert_alpha()
+    elefante_ani=pygame.image.load(path.join(img_dir, "Mobs/Elefante_spritesheet_ataque.png")).convert_alpha()
 
 
     # Cria Sprite do jogador------------------------------------------------------------------------------------------------
@@ -1142,6 +1356,9 @@ def game_screen(screen):
     lobo1_ani=Lobo1_Ani(lobo_ani)
     lobo2_ani=Lobo2_Ani(lobo_ani)
     lobo3_ani=Lobo3_Ani(lobo_ani)
+    lagarto1_ani=Lagarto1_Ani(lagarto_ani)
+    lagarto2_ani=Lagarto2_Ani(lagarto_ani)
+    elefante_ani= Elefante_Ani(elefante_ani)
 
     # Cria sprites dos lobos ------------------------------------------------------------------------------------------------------
 
@@ -1191,6 +1408,7 @@ def game_screen(screen):
     ani=0
     cont=0
     add1=0
+    hit=0
     #controla o tempo
 
     tempo_a=0
@@ -1218,10 +1436,10 @@ def game_screen(screen):
 
         if state==init:
             window.blit(start,(WIDTH-1550, HEIGHT-850))
-            call=font.render(f'Pressione as setas!', True, (255, 255, 255 ))
+            call=font.render(f'Pressione o mouse!', True, (255, 255, 255 ))
             call = pygame.transform.scale(call, (600, 150))
             window.blit(call,(WIDTH-740, HEIGHT-140))
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.MOUSEBUTTONUP:
                 state = PLAYING
 
         if state==PLAYING:
@@ -1242,11 +1460,11 @@ def game_screen(screen):
                 all_sprites.remove(veronica)
                 va=False
 
-            if not(ha and ra and va):
+            if not ha and not ra and not va:
                 state=end
 
             wave=1
-                
+
             if wave==1:
 
                 if add1==0:
@@ -1274,9 +1492,11 @@ def game_screen(screen):
             # HP dos lagartos (WAVE 2)-----------------------------------------------------------------------------------------
 
             if wave ==2:
-
-                all_sprites.add(lagarto1)
-                all_sprites.add(lagarto2)
+                
+                if add1==1:
+                    all_sprites.add(lagarto1)
+                    all_sprites.add(lagarto2)
+                    add1=2
 
                 HP_la1= font.render(f'HP {hp_la["lagarto1"]} / 1600' , True, (239, 3, 3 ))
                 HP_la2= font.render(f'HP {hp_la["lagarto2"]} / 1600' , True, (239, 3, 3 ))
@@ -1294,7 +1514,9 @@ def game_screen(screen):
 
             if wave ==3:
 
-                all_sprites.add(elefante)
+                if add1==2:
+                    all_sprites.add(elefante)
+                    add1=3
                 
                 HP_e = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
 
@@ -1355,7 +1577,6 @@ def game_screen(screen):
             if turno==0:
                 
                 if not ha:
-                    cont=1
                     ani=1
                     turno=1
 
@@ -1378,29 +1599,29 @@ def game_screen(screen):
 
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                                hp_l['lobo1']-=75
-                                hp_l['lobo2']-=75
-                                hp_l['lobo3']-=75
+                                hp_l['lobo1']-=100
+                                hp_l['lobo2']-=100
+                                hp_l['lobo3']-=100
                                 cl=1
                                 cont=1
 
                     if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
 
-                                if hp_r + 100 > 300:
+                                if hp_r + 125 > 300:
                                     hp_r=300
                                 else:
-                                    hp_r+=100
+                                    hp_r+=125
                                 
-                                if hp_h+100 > 225:
+                                if hp_h+125 > 225:
                                     hp_h=225
                                 else:
-                                    hp_h+=100
+                                    hp_h+=125
 
-                                if hp_v+100>450:
+                                if hp_v+125>450:
                                     hp_v=450
                                 else:
-                                    hp_v+=100
+                                    hp_v+=125
                                 cl=1
                                 cont=1
             
@@ -1409,27 +1630,27 @@ def game_screen(screen):
                     (x, y)= pygame.mouse.get_pos()
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                                hp_la['lagarto1']-=75
-                                hp_la['lagarto2']-=75
+                                hp_la['lagarto1']-=100
+                                hp_la['lagarto2']-=100
                                 cl=1
                                 cont=1
                                 
                     if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                                if hp_r + 100 > 300:
+                                if hp_r + 125 > 300:
                                     hp_r=300
                                 else:
-                                    hp_r+=100
+                                    hp_r+=125
                                 
-                                if hp_h+100 > 225:
+                                if hp_h+125 > 225:
                                     hp_h=225
                                 else:
-                                    hp_h+=100
+                                    hp_h+=125
 
-                                if hp_v+100>450:
+                                if hp_v+125>450:
                                     hp_v=450
                                 else:
-                                    hp_v+=100
+                                    hp_v+=125
                                 cl=1
                                 cont=1
                                 
@@ -1437,26 +1658,26 @@ def game_screen(screen):
                     (x, y)= pygame.mouse.get_pos()
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                       
-                                hp_e-=75
+                                hp_e-=100
                                 cl=1
                                 cont=1
 
                     if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                                if hp_r + 100 > 300:
+                                if hp_r + 125 > 300:
                                     hp_r=300
                                 else:
-                                    hp_r+=100
+                                    hp_r+=125
                                 
-                                if hp_h+100 > 225:
+                                if hp_h+125 > 225:
                                     hp_h=225
                                 else:
-                                    hp_h+=100
+                                    hp_h+=125
 
-                                if hp_v+100>450:
+                                if hp_v+125>450:
                                     hp_v=450
                                 else:
-                                    hp_v+=100
+                                    hp_v+=125
                                 cl=1
                                 cont=1
 
@@ -1480,7 +1701,6 @@ def game_screen(screen):
             if turno==1:
 
                 if not ra:
-                    cont=2
                     ani=2
                     turno=2
 
@@ -1505,9 +1725,9 @@ def game_screen(screen):
 
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130):
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                                hp_l['lobo1']-=100
-                                hp_l['lobo2']-=100
-                                hp_l['lobo3']-=100
+                                hp_l['lobo1']-=150
+                                hp_l['lobo2']-=150
+                                hp_l['lobo3']-=150
                                 cl=1
                                 cont=2
 
@@ -1520,20 +1740,20 @@ def game_screen(screen):
 
                     if (x >= WIDTH-400 and x<=WIDTH-180) and (y <= HEIGHT-330 and y>=HEIGHT-600) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_l['lobo1']-=225
+                            hp_l['lobo1']-=250
                             cl=1
                             deca=0
                             cont=2
 
                     if (x >= WIDTH-660 and x<=WIDTH-450) and (y <= HEIGHT-230 and y>=HEIGHT-480) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_l['lobo2']-=225
+                            hp_l['lobo2']-=250
                             cl=1
                             cont=2
 
                     if (x >= WIDTH-420 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-280) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_l['lobo3']-=225
+                            hp_l['lobo3']-=250
                             cl=1
                             cont=2
 
@@ -1542,8 +1762,8 @@ def game_screen(screen):
                     (x, y)= pygame.mouse.get_pos()
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                                hp_la['lagarto1']-=100
-                                hp_la['lagarto2']-=100
+                                hp_la['lagarto1']-=150
+                                hp_la['lagarto2']-=150
                                 cl=1
                                 cont=2
 
@@ -1555,14 +1775,14 @@ def game_screen(screen):
 
                     if (x >= WIDTH-530 and x<=WIDTH-220) and (y <= HEIGHT-330 and y>=HEIGHT-580) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_la['lagarto1']-=225
+                            hp_la['lagarto1']-=250
                             cl=1
                             deca=0
                             cont=2
 
                     if (x >= WIDTH-520 and x<=WIDTH-190) and (y <= HEIGHT-30 and y>=HEIGHT-260) and deca==1:
                         if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                            hp_la['lagarto2']-=225
+                            hp_la['lagarto2']-=250
                             cl=1
                             cont=2
 
@@ -1571,13 +1791,13 @@ def game_screen(screen):
                     (x, y)= pygame.mouse.get_pos()
                     if (x >= WIDTH-1000 and x<=WIDTH-800) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
-                                hp_e-=100
+                                hp_e-=150
                                 cl=1
                                 cont=2
 
                     if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:
-                                hp_e-=225
+                                hp_e-=250
                                 cl=1
                                 deca=0
                                 cont=2
@@ -1591,7 +1811,7 @@ def game_screen(screen):
                     all_sprites.remove(ritsu)
                     all_sprites.add(ritsu_ani)
 
-                    if agora-tempo_a>1320:
+                    if agora-tempo_a>820:
 
                         all_sprites.add(ritsu)
                         all_sprites.remove(ritsu_ani)
@@ -1601,8 +1821,9 @@ def game_screen(screen):
             # Turno da Veronica----------------------------------------------------------------------------------------------------------------
             if turno==2:
                 if not va:
-                    cont=3
-                    ani=0
+                    if wave==3:
+                        hit=0
+                    ani=3
                     turno=3
 
                 pygame.draw.polygon(window,cor,vertices1)
@@ -1692,6 +1913,7 @@ def game_screen(screen):
                             if event.type == pygame.MOUSEBUTTONUP and cl==0:                        
                                 ag=1
                                 cl=1
+                                hit=0
                                 cont=3
 
                     if (x >= WIDTH-750 and x<=WIDTH-550) and (y <= HEIGHT-30 and y>=HEIGHT-130) and event.type == pygame.MOUSEBUTTONUP:
@@ -1700,14 +1922,16 @@ def game_screen(screen):
                                 hp_e-=175
                                 cl=1
                                 deca=0
+                                hit=0
                                 cont=3
                                 
                 if cont==3 and ani==2:
                     tempo_a=pygame.time.get_ticks()
-                    ani=0
-                if cont==3:
-                    agora=pygame.time.get_ticks()
+                    ani=3
 
+                if cont==3:
+
+                    agora=pygame.time.get_ticks()
                     all_sprites.remove(veronica)
                     all_sprites.add(veronica_ani)
 
@@ -1715,318 +1939,382 @@ def game_screen(screen):
 
                         all_sprites.add(veronica)
                         all_sprites.remove(veronica_ani)
-                        tempo_a=pygame.time.get_ticks()
                         turno=3
 
             # Turno dos inimigos-------------------------------------------------------------------------------------------------------
             # Wave dos lobos--------------------------------------------------------------------------------------------------
             if wave ==1:
-                hit=0
                 if turno==3:
 
                     if hp_l['lobo1']<=0:
-                            turno=4 
+                        ani=3 
+                        hit=1
+                        turno=4
 
-                    all_sprites.remove(lobo1)
-                    all_sprites.add(lobo1_ani)
-                    agora=pygame.time.get_ticks()
 
-                    if agora-tempo_a>1000:
+                    else:
 
-                        all_sprites.remove(lobo1_ani)
-                        all_sprites.add(lobo1)
+                        if va and ra and ha:
+                            tg=random.randint(1, 3)
+                        if (va and ha) and not ra:
+                            tg=random.randint(1,3,2)
+                        if(va and ra) and not ha:
+                            tg=random.randint(2,3)
+                        if (ra and ha) and not va:
+                            tg=random.randint(1,2)
+                        if ra and not (ha and va):
+                            tg=2
+                        if ha and not (ra and va):
+                            tg=1
+                        if va and not (ra and ha):
+                            tg=3
 
-                        if hp_l['lobo1']>0:
-                            if va and ra and ha:
-                                tg=random.randint(1, 3)
-                            if (va and ha) and not ra:
-                                tg=random.randint(1,3,2)
-                            if(va and ra) and not ha:
-                                tg=random.randint(2,3)
-                            if (ra and ha) and not va:
-                                tg=random.randint(1,2)
-                            if ra and not (ha and va):
-                                tg=2
-                            if ha and not (ra and va):
-                                tg=1
-                            if va and not (ra and ha):
-                                tg=3
-
-                            if va and ag==1:
-                                hp_v-=50
-                                turno=4
-                                tempo_a=pygame.time.get_ticks()
+                        if va and ag==1 and hit==0:
+                            hp_v-=75
+                            hit=1
+                            cont=4
                                 
-                            else:
-                                if tg==1 and hit==0:
-                                    hp_h-=50
-                                    hit=1
-                                    turno=4
-                                    tempo_a=pygame.time.get_ticks()
+                        else:
+                            if tg==1 and hit==0:
+                                hp_h-=75
+                                hit=1
+                                cont=4
 
-                                if tg==2 and hit==0:
-                                    hp_r-=50
-                                    hit=1
-                                    turno=4
-                                    tempo_a=pygame.time.get_ticks()
+                            if tg==2 and hit==0:
+                                hp_r-=75
+                                hit=1
+                                cont=4
 
-                                if tg==3 and hit==0:
-                                    hp_v-=50
-                                    hit=1
-                                    turno=4
-                                    tempo_a=pygame.time.get_ticks()
+                            if tg==3 and hit==0:
+                                hp_v-=75
+                                hit=1
+                                cont=4
 
+                        if cont==4 and ani==3:
+                            tempo_a=pygame.time.get_ticks()
+                            ani=4
+
+                        if cont==4:
+                            agora=pygame.time.get_ticks()
+
+                            all_sprites.remove(lobo1)
+                            all_sprites.add(lobo1_ani)
+
+                            if agora-tempo_a>520:
+
+                                all_sprites.add(lobo1)
+                                all_sprites.remove(lobo1_ani)
+                                turno=4
                 if turno==4:
-                    hit=0
                     if hp_l['lobo2']<=0:
+                        ani=5 
+                        hit=2
                         turno=5
 
-                    all_sprites.remove(lobo2)
-                    all_sprites.add(lobo2_ani)
-
-                    agora=pygame.time.get_ticks()
-
-                    if agora-tempo_a>1000:
-
-                        all_sprites.remove(lobo2_ani)
-                        all_sprites.add(lobo2)
-
-                        if hp_l['lobo2']>0:
+                    if hp_l['lobo2']>0:
                                 
-                            if va and ra and ha:
-                                tg=random.randint(1, 3)
-                            if (va and ha) and not ra:
-                                tg=random.randint(1,3,2)
-                            if(va and ra) and not ha:
-                                tg=random.randint(2,3)
-                            if (ra and ha) and not va:
-                                tg=random.randint(1,2)
-                            if ra and not (ha and va):
-                                tg=2
-                            if ha and not (ra and va):
-                                tg=1
-                            if va and not (ra and ha):
-                                tg=3
+                        if va and ra and ha:
+                            tg=random.randint(1, 3)
+                        if (va and ha) and not ra:
+                            tg=random.randint(1,3,2)
+                        if(va and ra) and not ha:
+                            tg=random.randint(2,3)
+                        if (ra and ha) and not va:
+                            tg=random.randint(1,2)
+                        if ra and not (ha and va):
+                            tg=2
+                        if ha and not (ra and va):
+                            tg=1
+                        if va and not (ra and ha):
+                            tg=3
 
-                            if va and ag==1:
-                                hp_v-=50
+                        if va and ag==1 and hit==1:
+                            hp_v-=75
+                            hit=2
+                            cont=5
+
+                        else:
+                            if tg==1 and hit==1:
+                                hp_h-=75
+                                hit=2
+                                cont=5
+
+                            if tg==2 and hit==1:
+                                hp_r-=75
+                                hit=2
+                                cont=5
+
+                            if tg==3 and hit==1:
+                                hp_v-=75
+                                hit=2
+                                cont=5   
+
+                        if cont==5 and ani==4:
+                            tempo_a=pygame.time.get_ticks()
+                            ani=5
+
+                        if cont==5:
+                            agora=pygame.time.get_ticks()
+
+                            all_sprites.remove(lobo2)
+                            all_sprites.add(lobo2_ani)
+
+                            if agora-tempo_a>520:
+
+                                all_sprites.add(lobo2)
+                                all_sprites.remove(lobo2_ani)
                                 turno=5
-                                tempo_a=pygame.time.get_ticks()
-                            else:
-                                if tg==1 and hit==0:
-                                    hp_h-=50
-                                    hit=1
-                                    turno=5
-                                    tempo_a=pygame.time.get_ticks()
-                                if tg==2 and hit==0:
-                                    hp_r-=50
-                                    hit=1
-                                    turno=5
-                                    tempo_a=pygame.time.get_ticks()
-                                if tg==3 and hit==0:
-                                    hp_v-=50
-                                    hit=1
-                                    turno=5   
-                                    tempo_a=pygame.time.get_ticks()
-                        
+
                 if turno==5:
-                    hit=0
+
                     if hp_l['lobo3']<=0:
+                        ani=0 
+                        hit=0
                         turno=0
 
-                    all_sprites.remove(lobo3)
-                    all_sprites.add(lobo3_ani)
-
-                    agora=pygame.time.get_ticks()
-
-                    if agora-tempo_a>1000:
-
-                        all_sprites.remove(lobo3_ani)
-                        all_sprites.add(lobo3)
-
-                        if hp_l['lobo3']>0:
+                    if hp_l['lobo3']>0:
                                 
-                            if va and ra and ha:
-                                tg=random.randint(1, 3)
-                            if (va and ha) and not ra:
-                                tg=random.randint(1,3,2)
-                            if(va and ra) and not ha:
-                                tg=random.randint(2,3)
-                            if (ra and ha) and not va:
-                                tg=random.randint(1,2)
-                            if ra and not (ha and va):
-                                tg=2
-                            if ha and not (ra and va):
-                                tg=1
-                            if va and not (ra and ha):
-                                tg=3
+                        if va and ra and ha:
+                            tg=random.randint(1, 3)
+                        if (va and ha) and not ra:
+                            tg=random.randint(1,3,2)
+                        if(va and ra) and not ha:
+                            tg=random.randint(2,3)
+                        if (ra and ha) and not va:
+                            tg=random.randint(1,2)
+                        if ra and not (ha and va):
+                            tg=2
+                        if ha and not (ra and va):
+                            tg=1
+                        if va and not (ra and ha):
+                            tg=3
 
-                            if va and ag==1:
-                                hp_v-=50
-                                turno=0
-                                tempo_a=pygame.time.get_ticks()
-                            else:
-                                if tg==1 and hit==0:
-                                    hp_h-=50
-                                    hit=1
-                                    turno=0
-                                    tempo_a=pygame.time.get_ticks()
-                                if tg==2 and hit==0:
-                                    hp_r-=50
-                                    hit=1
-                                    turno=0
-                                    tempo_a=pygame.time.get_ticks()
-                                if tg==3 and hit==0:
-                                    hp_v-=50
-                                    hit=1
-                                    turno=0
-                                    tempo_a=pygame.time.get_ticks()   
+                        if va and ag==1 and hit==2:
+                            hp_v-=75
+                            hit=0
+                            cont=6
+
+                        else:
+                            if tg==1 and hit==2:
+                                hp_h-=75
+                                hit=0
+                                cont=6
+
+                            if tg==2 and hit==2:
+                                hp_r-=75
+                                hit=0
+                                cont=6
+
+                            if tg==3 and hit==2:
+                                hp_v-=75
+                                hit=0
+                                cont=6
+
+                        if cont==6 and ani==5:
+                            tempo_a=pygame.time.get_ticks()
+                            ani=0
+
+                        if cont==6:
+                            agora=pygame.time.get_ticks()
+
+                            all_sprites.remove(lobo3)
+                            all_sprites.add(lobo3_ani)
+
+                            if agora-tempo_a>520:
+
+                                all_sprites.add(lobo3)
+                                all_sprites.remove(lobo3_ani)
+                                turno=0  
+                         
             # Wave dos lagartos-----------------------------------------------------------------------------------------------------------------
 
             if wave ==2:
                 if turno==3:
-                    hit=0
                     if hp_la['lagarto1']<=0:
+                        ani=4 
+                        hit=1
                         turno=4
-                    agora=pygame.time.get_ticks()
-                    if agora-tempo_a>3000: 
-                        if hp_la['lagarto2']>0:
-                            if va and ra and ha:
-                                tg=random.randint(1, 3)
-                            if (va and ha) and not ra:
-                                tg=random.randint(1,3,2)
-                            if(va and ra) and not ha:
-                                tg=random.randint(2,3)
-                            if (ra and ha) and not va:
-                                tg=random.randint(1,2)
-                            if ra and not (ha and va):
-                                tg=2
-                            if ha and not (ra and va):
-                                tg=1
-                            if va and not (ra and ha):
-                                tg=3
 
-                            if va and ag==1:
-                                hp_v-=175
-                                turno=4
-                                tempo_a=pygame.time.get_ticks()
-                            else:
+                    if hp_la['lagarto1']>0:
+                        if va and ra and ha:
+                            tg=random.randint(1, 3)
+                        if (va and ha) and not ra:
+                            tg=random.randint(1,3,2)
+                        if(va and ra) and not ha:
+                            tg=random.randint(2,3)
+                        if (ra and ha) and not va:
+                            tg=random.randint(1,2)
+                        if ra and not (ha and va):
+                            tg=2
+                        if ha and not (ra and va):
+                            tg=1
+                        if va and not (ra and ha):
+                            tg=3
+
+                        if va and ag==1 and hit==0:
+                            hp_v-=125
+                            hit=1
+                            cont=4
+
+                        else:
                             
-                                if tg==1 and hit==0:
-                                    hp_h-=100
-                                    hit=1
-                                    turno=4
-                                    tempo_a=pygame.time.get_ticks()
-                                if tg==2 and hit==0:
-                                    hp_r-=100
-                                    hit=1
-                                    turno=4
-                                    tempo_a=pygame.time.get_ticks()
-                                if tg==3 and hit==0:
-                                    hp_v-=100
-                                    hit=1
-                                    turno=4
-                                    tempo_a=pygame.time.get_ticks()
+                            if tg==1 and hit==0:
+                                hp_h-=125
+                                hit=1
+                                cont=4
+
+                            if tg==2 and hit==0:
+                                hp_r-=125
+                                hit=1
+                                cont=4
+
+                            if tg==3 and hit==0:
+                                hp_v-=125
+                                hit=1
+                                cont=4
+
+
+                        if cont==4 and ani==3:
+                            tempo_a=pygame.time.get_ticks()
+                            ani=4
+
+                        if cont==4:
+
+                            agora=pygame.time.get_ticks()
+                            all_sprites.remove(lagarto1)
+                            all_sprites.add(lagarto1_ani)
+
+                            if agora-tempo_a>520:
+
+                                all_sprites.add(lagarto1)
+                                all_sprites.remove(lagarto1_ani)
+                                turno=4
 
                 if turno==4:
-                    hit=0
                     if hp_la['lagarto2']<=0:
+                        ani=0 
+                        hit=0
                         turno=0
-                    agora=pygame.time.get_ticks()
-                    if agora-tempo_a>3000: 
-                        if hp_la['lagarto2']>0:
-                                
-                            if va and ra and ha:
-                                tg=random.randint(1, 3)
-                            if (va and ha) and not ra:
-                                tg=random.randint(1,3,2)
-                            if(va and ra) and not ha:
-                                tg=random.randint(2,3)
-                            if (ra and ha) and not va:
-                                tg=random.randint(1,2)
-                            if ra and not (ha and va):
-                                tg=2
-                            if ha and not (ra and va):
-                                tg=1
-                            if va and not (ra and ha):
-                                tg=3
 
-                            if va and ag==1:
-                                hp_v-=100/2
-                                turno=0
-                                tempo_a=pygame.time.get_ticks()
+                    if hp_la['lagarto2']>0:
                             
-                            else:
+                        if va and ra and ha:
+                            tg=random.randint(1, 3)
+                        if (va and ha) and not ra:
+                            tg=random.randint(1,3,2)
+                        if(va and ra) and not ha:
+                            tg=random.randint(2,3)
+                        if (ra and ha) and not va:
+                            tg=random.randint(1,2)
+                        if ra and not (ha and va):
+                            tg=2
+                        if ha and not (ra and va):
+                                tg=1
+                        if va and not (ra and ha):
+                            tg=3
+                        if va and ag==1 and hit==1:
+                            hp_v-=125
+                            hit=0
+                            cont=5
+                        
+                        else:
+                            if tg==1 and hit==1:
+                                hp_h-=125
+                                hit=0
+                                cont=5
 
-                                if tg==1 and hit==0:
-                                    hp_h-=100
-                                    hit=1
-                                    turno=0
-                                    tempo_a=pygame.time.get_ticks()
-                                if tg==2 and hit==0:
-                                    hp_r-=100
-                                    hit=1
-                                    turno=0
-                                    tempo_a=pygame.time.get_ticks()
-                                if tg==3 and hit==0:
-                                    hp_v-=100
-                                    hit=1
-                                    turno=0   
-                                    tempo_a=pygame.time.get_ticks()
+                            if tg==2 and hit==1:
+                                hp_r-=125
+                                hit=0
+                                cont=5
+
+                            if tg==3 and hit==1:
+                                hp_v-=125
+                                hit=0
+                                cont=5   
+
+                        if cont==5 and ani==4:
+                            tempo_a=pygame.time.get_ticks()
+                            ani=0
+
+                        if cont==5:
+
+                            agora=pygame.time.get_ticks()
+                            all_sprites.remove(lagarto2)
+                            all_sprites.add(lagarto2_ani)
+
+                            if agora-tempo_a>520:
+
+                                all_sprites.add(lagarto2)
+                                all_sprites.remove(lagarto2_ani)
+                                turno=0
+
 
             # Wave do elefante boss------------------------------------------------------------------------------------------------------    
             if wave == 3:
                 if turno==3:
-                    hit=0
-                    if hp_e<=0:
-                        turno=0
-                    agora=pygame.time.get_ticks()
-                    if agora-tempo_a>3000: 
-                        if hp_e>0:
-                            if va and ag==1:
-                                hp_v-=225
-                                turno=0
-                                tempo_a=pygame.time.get_ticks()
-                            else:
-                                ae=random.randint(1,2)
-                                if ae==1:
-                                    hp_v-=100
-                                    hp_r-=100
-                                    hp_h-=100
-                                    turno=0
-                                    tempo_a=pygame.time.get_ticks()
 
-                                if ae==2:
-                                    if va and ra and ha:
-                                        tg=random.randint(1, 3)
-                                    if (va and ha) and not ra:
-                                        tg=random.randint(1,3,2)
-                                    if(va and ra) and not ha:
-                                        tg=random.randint(2,3)
-                                    if (ra and ha) and not va:
-                                        tg=random.randint(1,2)
-                                    if ra and not (ha and va):
-                                        tg=2
-                                    if ha and not (ra and va):
-                                        tg=1
-                                    if va and not (ra and ha):
-                                        tg=3
+                    if hp_e>0:
 
-                                    if tg==1 and hit==0:
-                                        hp_h-=175
-                                        hit=1
-                                        turno=0
-                                        tempo_a=pygame.time.get_ticks()
-                                    if tg==2 and hit==0:
-                                        hp_r-=175
-                                        hit=1
-                                        turno=0
-                                        tempo_a=pygame.time.get_ticks()
-                                    if tg==3 and hit==0:
-                                        hp_v-=175
-                                        hit=1
-                                        turno=0   
-                                        tempo_a=pygame.time.get_ticks()
+                        if va and ag==1 and hit==0:
+                            hp_v-=225
+                            hit=1
+                            cont=4
+
+                        else:
+                            ae=random.randint(1,3)
+                            if ae==1 and hit==0:
+                                hp_v-=150
+                                hp_r-=150
+                                hp_h-=150
+                                hit=1
+                                cont=4
+
+                            if ae==2 or ae==3:
+                                if va and ra and ha:
+                                    tg=random.randint(1, 3)
+                                if (va and ha) and not ra:
+                                    tg=random.randint(1,3,2)
+                                if(va and ra) and not ha:
+                                    tg=random.randint(2,3)
+                                if (ra and ha) and not va:
+                                    tg=random.randint(1,2)
+                                if ra and not (ha and va):
+                                    tg=2
+                                if ha and not (ra and va):
+                                    tg=1
+                                if va and not (ra and ha):
+                                    tg=3
+                                if tg==1 and hit==0:
+                                    hp_h-=175
+                                    hit=1
+                                    cont=4
+
+                                if tg==2 and hit==0:
+                                    hp_r-=175
+                                    hit=1
+                                    cont=4
+
+                                if tg==3 and hit==0:
+                                    hp_v-=175
+                                    hit=1
+                                    cont=4   
+
+                        if cont==4 and ani==3:
+                            tempo_a=pygame.time.get_ticks()
+                            ani=0
+
+                        if cont==4:
+
+                            agora=pygame.time.get_ticks()
+                            all_sprites.remove(elefante)
+                            all_sprites.add(elefante_ani)
+
+                            if agora-tempo_a>520:
+
+                                all_sprites.add(elefante)
+                                all_sprites.remove(elefante_ani)
+                                turno=0        
         
         if state==end:
             background_end = pygame.transform.scale(gameover, (WIDTH, HEIGHT))
@@ -2061,4 +2349,4 @@ print('*' * len(TITULO))
 try:
     game_screen(screen)
 finally:
-    pygame.quit()   
+    pygame.quit()
