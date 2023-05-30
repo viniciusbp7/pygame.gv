@@ -14,7 +14,7 @@ pygame.mixer.music.set_volume(0.4)
 # Define dados iniciais para as funções------------------------------------------------------------------------
 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 STILL = 0
-TITULO = 'NOME DO JOGO'
+TITULO = 'Eco do Destino'
 WIDTH = window.get_width()
 HEIGHT = window.get_height()
 FPS = 60 # Frames por segundo
@@ -22,7 +22,7 @@ background = pygame.image.load('imagens/base.webp')
 Win_stat=pygame.image.load('imagens/WIN.webp')
 gameover=pygame.image.load('imagens/GAMEOVER.png')
 start=pygame.image.load("imagens/Start!.png")
-pygame.display.set_caption('Hello World!')
+pygame.display.set_caption('Eco do Destino')
 
 game=True
 

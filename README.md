@@ -1,2 +1,7 @@
 # pygame.gv
-o grande jogo de Guido e Vinicius
+Nome do jogo:Eco do Destino
+Integrantes:
+-Guido Celano Mandelert
+-Vinicius Barreto Pomilio
+Só dar play na pasta jogo oficial
+
