@@ -21,13 +21,22 @@ FPS = 60 # Frames por segundo
 background = pygame.image.load('imagens/base.webp')
 Win_stat=pygame.image.load('imagens/WIN.webp')
 gameover=pygame.image.load('imagens/GAMEOVER.png')
-start=pygame.image.load("imagens/Start!.png")
+fight=pygame.image.load("imagens/Start!.png")
+preto=pygame.image.load("imagens/Imagem_preta.jpg")
 pygame.display.set_caption('Hello World!')
+
+veroncia_b=pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
+hinoekagura_b=pygame.image.load("imagens/Veronica/Veronica_Base.png")
+ristu_b=pygame.image.load("imagens/Ritsu/General_Ritsu_1.png")
+
+veroncia_b = pygame.transform.scale(veroncia_b, (300, 200))
+hinoekagura_b = pygame.transform.scale(hinoekagura_b, (150, 250))
+ristu_b = pygame.transform.scale(ristu_b, (240, 180))
 
 game=True
 
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
-
+preto = pygame.transform.scale(preto, (WIDTH, HEIGHT))
 # carrega a função da spritesheet------------------------------------------------------------------------------------
 
 def load_spritesheet(spritesheet, rows, columns):
@@ -1386,6 +1395,8 @@ def game_screen(screen):
 
     vertices2=[(WIDTH-750,HEIGHT-30),(WIDTH-750,HEIGHT-130),(WIDTH-550,HEIGHT-130),(WIDTH-550,HEIGHT-30)]
 
+    vertices3=[(60,20),(60,120),(400,120),(400,20)]
+
     # Inicia o loop principal do jogo------------------------------------------------------------------------------------------
     init = 2 
     end=3
@@ -1409,6 +1420,7 @@ def game_screen(screen):
     cont=0
     add1=0
     hit=0
+    menu=0
     #controla o tempo
 
     tempo_a=0
@@ -1435,15 +1447,61 @@ def game_screen(screen):
         # HP  dos personagens-----------------------------------------------------------------------------------------------
 
         if state==init:
-            window.blit(start,(WIDTH-1550, HEIGHT-850))
-            call=font.render(f'Pressione o mouse!', True, (255, 255, 255 ))
-            call = pygame.transform.scale(call, (600, 150))
-            window.blit(call,(WIDTH-740, HEIGHT-140))
-            if event.type == pygame.MOUSEBUTTONUP:
-                state = PLAYING
+            if menu==0:
+                window.blit(fight,(WIDTH-1550, HEIGHT-850))
+                start=font.render(f'Start', True, (255, 255, 255 ))
+                instrucao=font.render(f'Instruções', True, (255, 255, 255 ))
+                start = pygame.transform.scale(start, (300, 140))
+                instrucao = pygame.transform.scale(instrucao, (400, 140))
+                window.blit(start,(WIDTH-540, HEIGHT-340))
+                window.blit(instrucao,(WIDTH-540, HEIGHT-140))
+                (x, y)= pygame.mouse.get_pos()
+                if (x >= WIDTH-550 and x<=WIDTH-130) and (y <= HEIGHT-10 and y>=HEIGHT-130):
+                    if event.type == pygame.MOUSEBUTTONUP:
+                        menu=1
+                        
+                if (x >= WIDTH-550 and x<=WIDTH-220) and (y <= HEIGHT-210 and y>=HEIGHT-340):
+                    if event.type == pygame.MOUSEBUTTONUP:
+                        state = PLAYING
+
+            if menu==1:
+                window.blit(preto,(0, 0))
+                back=font.render(f'Aperte alguma seta para iniciar!!', True, (255, 255, 255 ))
+                back = pygame.transform.scale(back, (700, 100))
+                window.blit(back,(30, 50))
+
+                window.blit(veroncia_b,(WIDTH-1400, HEIGHT-700))
+
+                v1=font.render(f'Aggro: Chama a atenção dos inimigos', True, (255, 255, 255 ))
+                v1 = pygame.transform.scale(v1, (700, 40))
+                window.blit(v1,(350, 475))
+                v2=font.render(f'Soco: Causa 175 de dano a um inimigo', True, (255, 255, 255 ))
+                v2 = pygame.transform.scale(v2, (700, 40))
+                window.blit(v2,(350, 525))
+
+                window.blit(hinoekagura_b,(WIDTH-1400, HEIGHT-480))
+
+                h1=font.render(f'Explosão: Causa 100 de dano a todos os inimigos', True, (255, 255, 255 ))
+                h1 = pygame.transform.scale(h1, (700, 40))
+                window.blit(h1,(450, 250))
+                h2=font.render(f'Cura: Cura 125 de vida de todos os aliados', True, (255, 255, 255 ))
+                h2 = pygame.transform.scale(h2, (700, 40))
+                window.blit(h2,(450, 300))
+
+                window.blit(ristu_b,(WIDTH-1400, HEIGHT-200))
+
+                r1=font.render(f'Corte: Causa 150 de dano a todos os inimigos', True, (255, 255, 255 ))
+                r1 = pygame.transform.scale(r1, (700, 40))
+                window.blit(r1,(425, 725))
+                r2=font.render(f'Decapitar: Causa 225 de dano a um inimigo', True, (255, 255, 255 ))
+                r2 = pygame.transform.scale(r2, (700, 40))
+                window.blit(r2,(425, 775))
+
+                if event.type == pygame.KEYDOWN:
+                    state = PLAYING
+
 
         if state==PLAYING:
-
             HP_r= font.render(f'HP {hp_r} / 300', True, (46, 255, 0 ))
             HP_v= font.render(f'HP {hp_v} / 450' , True, (46, 255, 0 ))
             HP_h = font.render(f'HP {hp_h} / 225', True, (46, 255, 0 ))
