@@ -5,14 +5,18 @@ from os import path
 
 img_dir = path.join(path.dirname(__file__), 'imagens')
 
-# Importa os sprites de personagens e mobs------------------------------------------------------------------------
+#Estabelece os sons.
+pygame.mixer.init()
+pygame.mixer.music.load('sons/corrupted-violin-fencer-boss-theme.mp3')
+pygame.mixer.music.set_volume(0.4)
+
+# Define dados iniciais para as funções------------------------------------------------------------------------
 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 STILL = 0
-TITULO = 'Exemplo de Sprite Sheets e Animações'
+TITULO = 'NOME DO JOGO'
 WIDTH = window.get_width()
 HEIGHT = window.get_height()
 FPS = 60 # Frames por segundo
-BLACK = (0, 0, 0)
 background = pygame.image.load('imagens/base.webp')
 hinoekagura= pygame.image.load("imagens/Hinoekagura/Hinoekagura_Base.png")
 pygame.display.set_caption('Hello World!')
@@ -20,6 +24,8 @@ pygame.display.set_caption('Hello World!')
 game=True
 
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+
+# carrega a função da spritesheet------------------------------------------------------------------------------------
 
 def load_spritesheet(spritesheet, rows, columns):
     # Calcula a largura e altura de cada sprite.
@@ -43,6 +49,8 @@ def load_spritesheet(spritesheet, rows, columns):
             sprites.append(image)
 
     return sprites
+
+# Classes dos personagens----------------------------------------------------------------------------------------
 
 class Veronica(pygame.sprite.Sprite):
     
@@ -140,8 +148,8 @@ class Ristu(pygame.sprite.Sprite):
         # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
         
-        self.rect.centerx = 410
-        self.rect.centery = HEIGHT-370
+        self.rect.centerx = 470
+        self.rect.centery = HEIGHT-305
 
 
         # Guarda o tick da primeira imagem
@@ -180,8 +188,8 @@ class Ristu(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.center = center
 
-            self.rect.centerx = 400
-            self.rect.centery = HEIGHT-350
+            self.rect.centerx = 470
+            self.rect.centery = HEIGHT-305
 
 class Hinoekagura(pygame.sprite.Sprite):
     
@@ -192,12 +200,12 @@ class Hinoekagura(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
-        hinoekagura_sheet = pygame.transform.scale(hinoekagura_sheet, (860, 225))
+        hinoekagura_sheet = pygame.transform.scale(hinoekagura_sheet, (660, 225))
 
         # Define sequências de sprites de cada animação
-        spritesheet_H = load_spritesheet(hinoekagura_sheet, 1, 4)
+        spritesheet_H = load_spritesheet(hinoekagura_sheet, 1, 2)
         self.animations = {
-            STILL: spritesheet_H[0:5]
+            STILL: spritesheet_H[0:3]
         }
         # Define estado atual (que define qual animação deve ser mostrada)
         self.state = STILL
@@ -211,6 +219,146 @@ class Hinoekagura(pygame.sprite.Sprite):
         
         self.rect.centerx = 200
         self.rect.centery = HEIGHT-570
+
+
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 520
+
+    def update(self):
+        # Verifica o tick atual.
+        now = pygame.time.get_ticks()
+
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.frame += 1
+
+            # Atualiza animação atual
+            self.animation = self.animations[self.state]
+            # Reinicia a animação caso o índice da imagem atual seja inválido
+            if self.frame >= len(self.animation):
+                self.frame = 0
+            
+            # Armazena a posição do centro da imagem
+            center = self.rect.center
+            # Atualiza imagem atual
+            self.image = self.animation[self.frame]
+            # Atualiza os detalhes de posicionamento
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+
+            self.rect.centerx = 200
+            self.rect.centery = HEIGHT-570
+
+# Classes dos inimigos---------------------------------------------------------------------------------------------
+
+class Lobo(pygame.sprite.Sprite):
+    
+    # Construtor da classe. O argumento player_sheet é uma imagem contendo um spritesheet.
+    def __init__(self, lobo_sheet):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
+        lobo_sheet = pygame.transform.scale(lobo_sheet, (860, 230))
+
+        # Define sequências de sprites de cada animação
+        spritesheet_L = load_spritesheet(lobo_sheet, 1, 4)
+        self.animations = {
+            STILL: spritesheet_L[0:3]
+        }
+        # Define estado atual (que define qual animação deve ser mostrada)
+        self.state = STILL
+        # Define animação atual
+        self.animation = self.animations[self.state]
+        # Inicializa o primeiro quadro da animação
+        self.frame = 0
+        self.image = self.animation[self.frame]
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        self.rect.centerx = WIDTH-400
+        self.rect.centery = HEIGHT-395
+
+
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 140
+
+    def update(self):
+        # Verifica o tick atual.
+        now = pygame.time.get_ticks()
+
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.frame += 1
+
+            # Atualiza animação atual
+            self.animation = self.animations[self.state]
+            # Reinicia a animação caso o índice da imagem atual seja inválido
+            if self.frame >= len(self.animation):
+                self.frame = 0
+            
+            # Armazena a posição do centro da imagem
+            center = self.rect.center
+            # Atualiza imagem atual
+            self.image = self.animation[self.frame]
+            # Atualiza os detalhes de posicionamento
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+
+            self.rect.centerx = WIDTH-400
+            self.rect.centery = HEIGHT-395
+
+class Elefante(pygame.sprite.Sprite):
+    
+    # Construtor da classe. O argumento player_sheet é uma imagem contendo um spritesheet.
+    def __init__(self, elefante_sheet):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
+        elefante_sheet = pygame.transform.scale(elefante_sheet, (1460, 445))
+
+        # Define sequências de sprites de cada animação
+        spritesheet_E = load_spritesheet(elefante_sheet, 1, 3)
+        self.animations = {
+            STILL: spritesheet_E[0:3]
+        }
+        # Define estado atual (que define qual animação deve ser mostrada)
+        self.state = STILL
+        # Define animação atual
+        self.animation = self.animations[self.state]
+        # Inicializa o primeiro quadro da animação
+        self.frame = 0
+        self.image = self.animation[self.frame]
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        self.rect.centerx = WIDTH-400
+        self.rect.centery = HEIGHT-395
 
 
         # Guarda o tick da primeira imagem
@@ -249,57 +397,132 @@ class Hinoekagura(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.center = center
 
-            self.rect.centerx = 200
-            self.rect.centery = HEIGHT-570
+            self.rect.centerx = WIDTH-400
+            self.rect.centery = HEIGHT-395
+
+
+# Define situações inicias do jogo------------------------------------------------------------------------------------------
 
 def game_screen(screen):
-    # Variável para o ajuste de velocidade
+
+    # Variável para o ajuste de velocidade---------------------------------------------------------------------------------
+
     clock = pygame.time.Clock()
 
-    # Carrega spritesheet
+    # Carrega spritesheet ----------------------------------------------------------------------------------------------------
+
     veronica_sheet = pygame.image.load(path.join(img_dir, 'Veronica/Veronica_spritesheet_regular.png')).convert_alpha()
     ritsu_sheet = pygame.image.load(path.join(img_dir, "Ritsu/General_Ritsu_spritesheet_regular.png")).convert_alpha()
     hinoekagura_sheet = pygame.image.load(path.join(img_dir, "Hinoekagura/Hinoekagura_spritesheet_regular.png")).convert_alpha()
-    # Cria Sprite do jogador
+    elefane_sheet = pygame.image.load(path.join(img_dir, "Mobs/Elefante_spritesheet_regular.png")).convert_alpha()
+    lobo_sheet = pygame.image.load(path.join(img_dir, "Mobs/Lobo_spritesheet_regular.png")).convert_alpha()
+
+    # Cria Sprite do jogador------------------------------------------------------------------------------------------------
 
     veronica = Veronica(veronica_sheet)
     ritsu = Ristu(ritsu_sheet)
     hinoekagura=Hinoekagura(hinoekagura_sheet)
+    elefante= Elefante(elefane_sheet)
+    lobo = Lobo(lobo_sheet)
 
-    # Cria um grupo de todos os sprites e adiciona o jogador.
+    # Cria um grupo de todos os sprites do jogador-------------------------------------------------------------------------
 
     all_sprites = pygame.sprite.Group()
     all_sprites.add(veronica)
     all_sprites.add(ritsu)
     all_sprites.add(hinoekagura)
 
+    
+    # Inicia o loop principal do jogo------------------------------------------------------------------------------------------
+
     PLAYING = 0
     DONE = 1
 
+    hp_r=(300)
+    hp_v=(450)
+    hp_h=(150)
+    hp_l={'lobo1':300, 'lobo2':300, 'lobo3':300}
+    hp_la=(800)
+    hp_e=(3000)
+    pygame.mixer.music.play(loops=-1)
     state = PLAYING
     while state != DONE:
-        
-        # Ajusta a velocidade do jogo.
+
         clock.tick(FPS)
         for event in pygame.event.get():
-        # Processa os eventos (mouse, teclado, botão, etc).
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     state = DONE
-    
-        # Depois de processar os eventos.
-        # Atualiza a acao de cada sprite. O grupo chama o método update() de cada Sprite dentre dele.
+
+        # Escreve o hp----------------------------------------------------------------------------------------------------
+
+        font = pygame.font.SysFont(None, 48)
+
+        # HP  dos personagens-----------------------------------------------------------------------------------------------
+
+        HP_r= font.render(f'HP {hp_r} / 300', True, (46, 255, 0 ))
+        HP_v= font.render(f'HP {hp_v} / 450' , True, (46, 255, 0 ))
+        HP_h = font.render(f'HP {hp_h} / 150', True, (46, 255, 0 ))
+
+        wave=1
+        dano=1
+        if wave==1:
+
+            all_sprites.add(lobo)
+
+            # HP dos lobos (WAVE 1)---------------------------------------------------------------------------------------------
+
+            
+
+            HP_l1= font.render(f'HP {hp_l["lobo1"]} / 300', True, (239, 3, 3 ))
+            #HP_l2= font.render(f'HP {hp_l["lobo2"]} / 300', True, (239, 3, 3 ))
+            #HP_l3= font.render(f'HP {hp_l["lobo3"]} / 300', True, (239, 3, 3 ))
+
+            hp_l["lobo1"]-=1
+
+        
+            window.blit(HP_l1,(WIDTH-540, HEIGHT-640))
+
+            if hp_l['lobo1']<=0:
+                all_sprites.remove(lobo)
+                wave = 2
+
+        # HP dos lagartos (WAVE 2)-----------------------------------------------------------------------------------------
+
+        HP_la1= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
+        HP_la2= font.render(f'HP {hp_la} / 800' , True, (239, 3, 3 ))
+
+        # HP do elefante (BOSS WAVE 3)-----------------------------------------------------------------------------------------
+        if wave ==2:
+            all_sprites.add(elefante)
+            
+            HP_e = font.render(f'HP {hp_e} / 3000', True, (239, 3, 3 ))
+
+            hp_e-=1
+
+            if hp_e>0:
+                window.blit(HP_e,(WIDTH-540, HEIGHT-640))
+
+            if hp_e<=0:
+                all_sprites.remove(elefante)
+                
+
+
+
+        # Atualiza a acao de cada sprite------------------------------------------------------------------------------------
         all_sprites.update()
         
-        # A cada loop, redesenha o fundo e os sprites
-        screen.fill(BLACK)
+        
         window.blit(background, (0, 0))
         all_sprites.draw(screen)
 
-        # Depois de desenhar tudo, inverte o display.
+        window.blit(HP_r,(360, HEIGHT-460))
+        window.blit(HP_v,(110, HEIGHT-380))
+        window.blit(HP_h,(130, HEIGHT-730))
+        window.blit(HP_l1,(WIDTH-540, HEIGHT-640))
 
         pygame.display.flip()
 
-# Inicialização do Pygame.
+# Inicialização do Pygame-----------------------------------------------------------------------------------------------
 pygame.init()
 pygame.mixer.init()
 
@@ -318,4 +541,4 @@ print('*' * len(TITULO))
 try:
     game_screen(screen)
 finally:
-    pygame.quit()
+    pygame.quit()   

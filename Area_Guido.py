@@ -2,6 +2,8 @@ import pygame
 from os import path
 import random
 
+
+
 # Estabelece a pasta que contem as figuras e sons.
 
 img_dir = path.join(path.dirname(__file__), 'imagens')
@@ -24,6 +26,12 @@ gameover=pygame.image.load('imagens/GAMEOVER.png')
 start=pygame.image.load("imagens/Start!.png")
 pygame.display.set_caption('Hello World!')
 
+#ataque ritsu
+Ritsu1=pygame.image.load('imagens/Ritsu/General_Ritsu_22.png')
+Ritsu2=pygame.image.load('imagens/Ritsu/General_Ritsu_23.png')
+Ritsu3=pygame.image.load('imagens/Ritsu/General_Ritsu_24.png')
+Ritsu4=pygame.image.load('imagens/Ritsu/General_Ritsu_25.png')
+Ritsu_atac=[Ritsu1,Ritsu2,Ritsu3,Ritsu4]
 game=True
 
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
